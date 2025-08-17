@@ -10,22 +10,26 @@ import Features from '@/components/Features'
 import Benefits from '@/components/Benefits'
 import FAQ from '@/components/FAQ'
 import About from '@/components/About'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   return (
-    <main>
-      <Hero />
-      <Advantages />
-      <ProductCards />
-      <Promo />
-      <Delivery />
-      <Pricing />
-      <HeatingTypes />
-      <Gallery />
-      <Features />
-      <Benefits />
-      <FAQ />
-      <About />
-    </main>
+    <>
+      <main>
+        <Hero />
+        <Advantages />
+        <ProductCards />
+        <Promo />
+        <Delivery />
+        <Pricing />
+        <HeatingTypes />
+        <Gallery />
+        <Features />
+        <Benefits />
+        <FAQ />
+        <About />
+      </main>
+      <Footer />
+    </>
   )
 }
