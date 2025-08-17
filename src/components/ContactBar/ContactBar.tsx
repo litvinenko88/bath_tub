@@ -28,13 +28,13 @@ const ContactBar = () => {
             {/* Кнопки связи */}
             <div className="flex items-center space-x-3">
               {/* Оператор */}
-              <button className="group relative bg-white/20 hover:bg-white/30 rounded-full p-3 transition-all duration-300 hover:scale-110 hover:shadow-lg">
+              <button className="group relative transition-all duration-300 hover:scale-110 hover:shadow-lg">
                 <Image 
                   src="/images/operator.png" 
                   alt="Оператор" 
-                  width={24} 
-                  height={24}
-                  className="group-hover:scale-110 transition-transform duration-300"
+                  width={48} 
+                  height={48}
+                  className="rounded-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
                 <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                   Онлайн консультант
