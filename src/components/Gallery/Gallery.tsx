@@ -10,14 +10,10 @@ export default function Gallery() {
     { src: '/images/slider/car2.jpg', alt: 'Деревянный чан с подогревом' },
     { src: '/images/slider/car3.jpg', alt: 'Семейный отдых в банном чане' },
     { src: '/images/slider/car4.jpg', alt: 'Банный чан зимой под снегом' },
-    { src: '/images/slider/car5.jpg', alt: 'Романтический вечер в чане' },
-    { src: '/images/slider/car6.jpg', alt: 'Банный чан с видом на лес' },
-    { src: '/images/slider/car7.jpg', alt: 'Компания друзей в банном чане' },
     { src: '/images/slider/car8.jpg', alt: 'Банный чан на террасе дома' },
     { src: '/images/slider/car9.jpg', alt: 'Чан с гидромассажем и подсветкой' },
     { src: '/images/slider/car10.jpg', alt: 'Банный чан у озера на рассвете' },
     { src: '/images/slider/car11.jpg', alt: 'Элитный чан из японского кедра' },
-    { src: '/images/slider/car12.jpg', alt: 'Банный чан с панорамным видом' },
     { src: '/images/slider/car13.jpg', alt: 'Чан для коммерческого использования' },
     { src: '/images/slider/car14.jpg', alt: 'Банный чан в горах на закате' },
     { src: '/images/slider/car15.jpg', alt: 'Современный чан с автоматикой' }
@@ -85,7 +81,7 @@ export default function Gallery() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-33.333% - ${15 * 8}px));
+            transform: translateX(calc(-33.333% - ${11 * 8}px));
           }
         }
         
