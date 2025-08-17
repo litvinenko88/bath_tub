@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 export default function FAQ() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
   const [currentReview, setCurrentReview] = useState(0)
+  const [showAllFAQ, setShowAllFAQ] = useState(false)
 
   const faqs = [
     {
@@ -98,6 +99,8 @@ export default function FAQ() {
     }
   ]
 
+  const visibleFAQs = showAllFAQ ? faqs : faqs.slice(0, 5)
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentReview((prev) => (prev + 1) % reviews.length)
@@ -108,7 +111,7 @@ export default function FAQ() {
   return (
     <section className="py-16 sm:py-20 bg-gradient-to-b from-white to-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* FAQ */}
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-8">
@@ -116,7 +119,7 @@ export default function FAQ() {
             </h2>
             
             <div className="space-y-4">
-              {faqs.map((faq, index) => (
+              {visibleFAQs.map((faq, index) => (
                 <div key={index} className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
                   <button
                     onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
@@ -140,6 +143,22 @@ export default function FAQ() {
                   )}
                 </div>
               ))}
+              
+              {!showAllFAQ ? (
+                <button
+                  onClick={() => setShowAllFAQ(true)}
+                  className="text-sm text-gray-500 hover:text-orange-500 transition-colors duration-300 mt-4 underline"
+                >
+                  Посмотреть все
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowAllFAQ(false)}
+                  className="text-sm text-gray-500 hover:text-orange-500 transition-colors duration-300 mt-4 underline"
+                >
+                  Свернуть
+                </button>
+              )}
             </div>
           </div>
 
@@ -150,7 +169,7 @@ export default function FAQ() {
             </h2>
             
             <div className="relative">
-              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 min-h-[300px] flex flex-col justify-between">
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 min-h-[400px] flex flex-col justify-between">
                 <div>
                   <div className="flex items-start mb-4">
                     <div className="flex-shrink-0 mr-4">
