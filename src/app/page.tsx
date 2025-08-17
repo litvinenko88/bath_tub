@@ -5,6 +5,7 @@ import Promo from '@/components/Promo'
 import Delivery from '@/components/Delivery'
 import Pricing from '@/components/Pricing'
 import HeatingTypes from '@/components/HeatingTypes'
+import Gallery from '@/components/Gallery'
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Delivery />
       <Pricing />
       <HeatingTypes />
+      <Gallery />
     </main>
   )
 }
