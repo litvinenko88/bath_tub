@@ -9,6 +9,7 @@ import Gallery from '@/components/Gallery'
 import Features from '@/components/Features'
 import Benefits from '@/components/Benefits'
 import FAQ from '@/components/FAQ'
+import About from '@/components/About'
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
       <Features />
       <Benefits />
       <FAQ />
+      <About />
     </main>
   )
 }
