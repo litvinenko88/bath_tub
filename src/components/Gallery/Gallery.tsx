@@ -1,14 +1,9 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const [isPaused, setIsPaused] = useState(false)
-  const sliderRef = useRef<HTMLDivElement>(null)
-  const startX = useRef(0)
-  const currentX = useRef(0)
-  const isDragging = useRef(false)
   
   const images = [
     { src: '/images/slider/car1.jpg', alt: 'Банный чан из кедра на природе' },
@@ -28,39 +23,11 @@ export default function Gallery() {
     { src: '/images/slider/car15.jpg', alt: 'Современный чан с автоматикой' }
   ]
 
-  const handleStart = (clientX: number) => {
-    isDragging.current = true
-    setIsPaused(true)
-    startX.current = clientX
-    currentX.current = clientX
-  }
-
-  const handleMove = (clientX: number) => {
-    if (!isDragging.current || !sliderRef.current) return
-    
-    const diff = startX.current - clientX
-    sliderRef.current.style.transform = `translateX(calc(-33.333% - 8px - ${diff}px))`
-  }
-
-  const handleEnd = () => {
-    if (!isDragging.current) return
-    isDragging.current = false
-    
-    if (sliderRef.current) {
-      sliderRef.current.style.transform = ''
-    }
-    
-    setTimeout(() => setIsPaused(false), 1000)
-  }
-
-  const handleImageClick = (imageSrc: string) => {
-    if (!isDragging.current) {
-      setSelectedImage(imageSrc)
-    }
-  }
+  // Создаем тройной набор для плавной бесконечной прокрутки
+  const allImages = [...images, ...images, ...images]
 
   return (
-    <section className="py-16 sm:py-20 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+    <section className="py-16 sm:py-20 bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Заголовок */}
         <div className="text-center mb-12 sm:mb-16">
@@ -70,44 +37,27 @@ export default function Gallery() {
         </div>
 
         {/* Слайдер */}
-        <div className="relative">
-          <div className="overflow-hidden rounded-2xl shadow-2xl">
-            <div 
-              ref={sliderRef}
-              className={`flex ${isPaused ? '' : 'animate-infinite-scroll'} cursor-grab active:cursor-grabbing select-none`}
-              onMouseDown={(e) => handleStart(e.clientX)}
-              onMouseMove={(e) => handleMove(e.clientX)}
-              onMouseUp={handleEnd}
-              onMouseLeave={handleEnd}
-              onTouchStart={(e) => handleStart(e.touches[0].clientX)}
-              onTouchMove={(e) => {
-                e.preventDefault()
-                handleMove(e.touches[0].clientX)
-              }}
-              onTouchEnd={handleEnd}
-            >
-              {/* Тройной набор изображений для полной бесконечности */}
-              {[...images, ...images, ...images].map((image, index) => (
-                <div key={index} className="flex-shrink-0 w-96 h-72 mx-3">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
-                    onClick={() => handleImageClick(image.src)}
-                    draggable={false}
-                  />
-                </div>
-              ))}
-            </div>
+        <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+          <div className="flex animate-scroll" style={{ width: `${allImages.length * 400}px` }}>
+            {allImages.map((image, index) => (
+              <div key={index} className="flex-shrink-0 w-96 h-72 mx-2">
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
+                  onClick={() => setSelectedImage(image.src)}
+                />
+              </div>
+            ))}
           </div>
           
-          {/* Градиентные маски по краям */}
+          {/* Градиентные маски */}
           <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-slate-50 to-transparent pointer-events-none z-10"></div>
           <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
         </div>
       </div>
 
-      {/* Модальное окно для полноэкранного просмотра */}
+      {/* Модальное окно */}
       {selectedImage && (
         <div 
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
@@ -123,26 +73,28 @@ export default function Gallery() {
               onClick={() => setSelectedImage(null)}
               className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              ✕
             </button>
           </div>
         </div>
       )}
 
       <style jsx>{`
-        @keyframes infinite-scroll {
-          from {
+        @keyframes scroll {
+          0% {
             transform: translateX(0);
           }
-          to {
-            transform: translateX(calc(-33.333% - 8px));
+          100% {
+            transform: translateX(calc(-33.333% - ${15 * 8}px));
           }
         }
         
-        .animate-infinite-scroll {
-          animation: infinite-scroll 60s linear infinite;
+        .animate-scroll {
+          animation: scroll 60s linear infinite;
+        }
+        
+        .animate-scroll:hover {
+          animation-play-state: paused;
         }
       `}</style>
     </section>
