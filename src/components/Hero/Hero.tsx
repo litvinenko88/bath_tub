@@ -19,7 +19,7 @@ export default function Hero() {
       <div className="absolute bottom-20 left-10 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       
       {/* Контент */}
-      <div className="relative z-10 flex items-center min-h-screen">
+      <div className="relative z-10 min-h-screen py-20 flex flex-col justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="text-center sm:text-left">
             {/* Бейдж */}
