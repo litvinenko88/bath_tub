@@ -6,6 +6,7 @@ import Delivery from '@/components/Delivery'
 import Pricing from '@/components/Pricing'
 import HeatingTypes from '@/components/HeatingTypes'
 import Gallery from '@/components/Gallery'
+import Features from '@/components/Features'
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Pricing />
       <HeatingTypes />
       <Gallery />
+      <Features />
     </main>
   )
 }
