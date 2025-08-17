@@ -3,6 +3,7 @@ import Advantages from '@/components/Advantages'
 import ProductCards from '@/components/ProductCards'
 import Promo from '@/components/Promo'
 import Delivery from '@/components/Delivery'
+import Pricing from '@/components/Pricing'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <ProductCards />
       <Promo />
       <Delivery />
+      <Pricing />
     </main>
   )
 }
