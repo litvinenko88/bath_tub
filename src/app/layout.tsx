@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header/Header'
+import CursorSteam from '@/components/CursorSteam'
 
 export const metadata: Metadata = {
   title: '🔥 Банный чан от производителя 🔥 | Купить купель для купания 🏊♂️ | Гарантия 10 лет 💯',
@@ -22,6 +23,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <CursorSteam />
         <Header />
         {children}
       </body>
