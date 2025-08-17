@@ -7,6 +7,8 @@ import Pricing from '@/components/Pricing'
 import HeatingTypes from '@/components/HeatingTypes'
 import Gallery from '@/components/Gallery'
 import Features from '@/components/Features'
+import Benefits from '@/components/Benefits'
+import FAQ from '@/components/FAQ'
 
 export default function Home() {
   return (
@@ -20,6 +22,8 @@ export default function Home() {
       <HeatingTypes />
       <Gallery />
       <Features />
+      <Benefits />
+      <FAQ />
     </main>
   )
 }
