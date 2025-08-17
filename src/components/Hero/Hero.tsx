@@ -1,3 +1,5 @@
+'use client'
+
 import Button from '../Button'
 
 export default function Hero() {
@@ -71,9 +73,21 @@ export default function Hero() {
             
             {/* Кнопки */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start animate-fade-in-up animation-delay-1000">
-              <Button variant="primary" className="transform hover:scale-105 transition-all duration-300">
-                Посмотреть каталог
-              </Button>
+              <a 
+                href="#catalog"
+                onClick={(e) => {
+                  e.preventDefault()
+                  const element = document.querySelector('#catalog')
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }}
+                className="inline-block"
+              >
+                <Button variant="primary" className="transform hover:scale-105 transition-all duration-300">
+                  Посмотреть каталог
+                </Button>
+              </a>
               <Button variant="secondary" className="transform hover:scale-105 transition-all duration-300">
                 Рассчитать стоимость
               </Button>
