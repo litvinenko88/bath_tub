@@ -1,7 +1,11 @@
-export default function ConsultationButton() {
+interface ConsultationButtonProps {
+  onClick: () => void
+}
+
+export default function ConsultationButton({ onClick }: ConsultationButtonProps) {
   return (
     <div className="hidden sm:flex">
-      <button className="consultation-btn">
+      <button onClick={onClick} className="consultation-btn">
         Консультация
       </button>
     </div>

@@ -6,9 +6,11 @@ import Navigation from '../Navigation'
 import ConsultationButton from '../ConsultationButton'
 import HamburgerButton from '../HamburgerButton'
 import MobileMenu from '../MobileMenu'
+import ConsultationModal from '../ConsultationModal'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const menuItems = [
     { name: 'Каталог', href: '#catalog' },
@@ -27,7 +29,7 @@ export default function Header() {
           <Navigation menuItems={menuItems} />
           
           <div className="flex items-center space-x-4">
-            <ConsultationButton />
+            <ConsultationButton onClick={() => setIsModalOpen(true)} />
             <HamburgerButton 
               isMenuOpen={isMenuOpen} 
               onClick={() => setIsMenuOpen(!isMenuOpen)} 
@@ -40,6 +42,11 @@ export default function Header() {
         isMenuOpen={isMenuOpen}
         menuItems={menuItems}
         onClose={() => setIsMenuOpen(false)}
+      />
+      
+      <ConsultationModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </header>
   )
