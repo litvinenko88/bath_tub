@@ -20,8 +20,8 @@ export default function Hero() {
       
       {/* Контент */}
       <div className="relative z-10 flex items-center min-h-screen">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center lg:text-left">
+        <div className="container mx-auto px-4">
+          <div className="text-center lg:text-left">
             {/* Бейдж */}
             <div className="inline-flex items-center px-4 py-2 mb-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-medium text-white animate-fade-in-up">
               <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
