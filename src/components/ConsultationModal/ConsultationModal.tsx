@@ -21,6 +21,7 @@ const ConsultationModal = ({ isOpen, onClose, source = 'Кнопка "Консу
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState('')
 
   const validateForm = () => {
     const newErrors = { name: '', phone: '' }
@@ -58,14 +59,19 @@ const ConsultationModal = ({ isOpen, onClose, source = 'Кнопка "Консу
 ⏰ Время: ${new Date().toLocaleString('ru-RU')}`
 
     try {
-      await fetch(`https://api.telegram.org/bot8377894078:AAGnvLSJAiRYGjigMw9yYeUeYWzghPw5X7E/sendMessage`, {
+      const response = await fetch('/api/send-message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chat_id: '682859146',
-          text: message
+          name: formData.name,
+          phone: formData.phone,
+          source
         })
       })
+
+      if (!response.ok) {
+        throw new Error('Ошибка отправки')
+      }
 
       setIsSuccess(true)
       setTimeout(() => {
@@ -76,6 +82,7 @@ const ConsultationModal = ({ isOpen, onClose, source = 'Кнопка "Консу
       }, 2000)
     } catch (error) {
       console.error('Ошибка отправки:', error)
+      setError('Произошла ошибка при отправке. Попробуйте еще раз.')
     } finally {
       setIsSubmitting(false)
     }
@@ -194,6 +201,12 @@ const ConsultationModal = ({ isOpen, onClose, source = 'Кнопка "Консу
                   </a>
                 </label>
               </div>
+
+              {error && (
+                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+                  {error}
+                </div>
+              )}
 
               <button
                 type="submit"
