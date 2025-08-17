@@ -79,18 +79,13 @@ export default function HeatingTypes() {
               
               <div className="relative z-10">
                 {/* Иконка и заголовок */}
-                <div className="flex items-start mb-4">
+                <div className="flex items-center mb-4">
                   <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center text-white mr-4 group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                     {type.icon}
                   </div>
-                  <div>
-                    <div className="flex items-center mb-2">
-                      <span className="text-2xl font-bold text-orange-600 mr-2">{index + 1}.</span>
-                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-orange-600 transition-colors duration-300">
-                        {type.title}
-                      </h3>
-                    </div>
-                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-orange-600 transition-colors duration-300">
+                    {type.title}
+                  </h3>
                 </div>
                 
                 {/* Описание */}
