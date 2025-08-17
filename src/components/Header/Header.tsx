@@ -47,6 +47,7 @@ export default function Header() {
       <ConsultationModal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        source="Кнопка 'Консультация' в Header"
       />
     </header>
   )

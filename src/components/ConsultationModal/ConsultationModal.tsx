@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import * as React from 'react'
 
 interface ConsultationModalProps {
   isOpen: boolean
   onClose: () => void
+  source?: string
 }
 
-const ConsultationModal = ({ isOpen, onClose }: ConsultationModalProps) => {
+const ConsultationModal = ({ isOpen, onClose, source = 'Кнопка "Консультация" в Header' }: ConsultationModalProps) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -51,7 +53,7 @@ const ConsultationModal = ({ isOpen, onClose }: ConsultationModalProps) => {
 
 👤 Имя: ${formData.name}
 📞 Телефон: ${formData.phone}
-📍 Источник: Кнопка "Консультация" в Header
+📍 Источник: ${source}
 
 ⏰ Время: ${new Date().toLocaleString('ru-RU')}`
 
@@ -80,13 +82,21 @@ const ConsultationModal = ({ isOpen, onClose }: ConsultationModalProps) => {
   }
 
   // Блокировка скролла
-  if (typeof window !== 'undefined') {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = 'unset'
+      }
     }
-  }
+    
+    return () => {
+      if (typeof window !== 'undefined') {
+        document.body.style.overflow = 'unset'
+      }
+    }
+  }, [isOpen])
 
   if (!isOpen) return null
 
@@ -94,22 +104,12 @@ const ConsultationModal = ({ isOpen, onClose }: ConsultationModalProps) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
         className="absolute inset-0 bg-black/60 backdrop-blur-sm" 
-        onClick={() => {
-          onClose()
-          if (typeof window !== 'undefined') {
-            document.body.style.overflow = 'unset'
-          }
-        }}
+        onClick={onClose}
       ></div>
       
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in">
         <button
-          onClick={() => {
-            onClose()
-            if (typeof window !== 'undefined') {
-              document.body.style.overflow = 'unset'
-            }
-          }}
+          onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 transition-colors"
         >
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

@@ -1,4 +1,10 @@
+'use client'
+
+import { useState } from 'react'
+import ConsultationModal from '../ConsultationModal'
+
 export default function Delivery() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const deliveryMethods = [
     {
       icon: (
@@ -202,13 +208,22 @@ export default function Delivery() {
         <div className="text-center bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-8 sm:p-12 text-white shadow-2xl">
           <h3 className="text-2xl sm:text-3xl font-bold mb-4">Остались вопросы?</h3>
           <p className="mb-6 text-orange-100 text-lg">Поможем подобрать оптимальный вариант доставки!</p>
-          <a href="tel:+79964179001" className="inline-flex items-center bg-white text-orange-600 font-bold py-4 px-8 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center bg-white text-orange-600 font-bold py-4 px-8 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
             <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+              <path d="M8 12a4 4 0 100-8 4 4 0 000 8zM2 13s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H2zM13 6a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
-            <span className="text-lg">+7 (996) 417-90-01</span>
-          </a>
+            <span className="text-lg">Спросить</span>
+          </button>
         </div>
+        
+        <ConsultationModal 
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          source="Кнопка 'Спросить' в блоке Доставка"
+        />
       </div>
     </section>
   )

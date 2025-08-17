@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import Button from '../Button'
+import ConsultationModal from '../ConsultationModal'
 
 export default function Promo() {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
   const [promoDate, setPromoDate] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     const today = new Date()
@@ -115,13 +117,23 @@ export default function Promo() {
             
             {/* Кнопка */}
             <div className="animate-fade-in-up animation-delay-900">
-              <Button variant="primary" className="transform hover:scale-105 transition-all duration-300">
+              <Button 
+                variant="primary" 
+                className="transform hover:scale-105 transition-all duration-300"
+                onClick={() => setIsModalOpen(true)}
+              >
                 Узнать подробности
               </Button>
             </div>
           </div>
         </div>
       </div>
+      
+      <ConsultationModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        source="Кнопка 'Узнать подробности' в блоке Акция"
+      />
     </section>
   )
 }
