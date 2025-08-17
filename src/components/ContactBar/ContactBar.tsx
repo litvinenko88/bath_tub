@@ -1,11 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import OperatorChat from '@/components/OperatorChat'
 
 const ContactBar = () => {
   const [showAllButtons, setShowAllButtons] = useState(false)
+  const chatRef = useRef<{ openChat: () => void }>(null)
+
+  const handleOperatorClick = () => {
+    chatRef.current?.openChat()
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +28,10 @@ const ContactBar = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center space-y-3">
       {/* Оператор - всегда видим */}
-      <button className="group relative w-12 h-12 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
+      <button 
+        onClick={handleOperatorClick}
+        className="group relative w-12 h-12 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+      >
         <Image 
           src="/images/operator.png" 
           alt="Оператор" 
@@ -85,7 +93,7 @@ const ContactBar = () => {
       </div>
       
       {/* Компонент чата */}
-      <OperatorChat onChatOpen={() => {}} />
+      <OperatorChat ref={chatRef} />
     </div>
   )
 }
