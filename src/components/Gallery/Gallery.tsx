@@ -30,9 +30,9 @@ export default function Gallery() {
         {/* Слайдер */}
         <div className="relative">
           <div className="overflow-hidden rounded-2xl shadow-2xl">
-            <div className="flex animate-slide">
-              {/* Тройной набор изображений для бесшовности */}
-              {[...images, ...images, ...images].map((image, index) => (
+            <div className="flex animate-infinite-scroll">
+              {/* Двойной набор изображений для бесконечности */}
+              {images.concat(images).map((image, index) => (
                 <div key={index} className="flex-shrink-0 w-96 h-72 mx-3">
                   <img
                     src={image}
@@ -76,20 +76,20 @@ export default function Gallery() {
       )}
 
       <style jsx>{`
-        @keyframes slide {
-          0% {
+        @keyframes infinite-scroll {
+          from {
             transform: translateX(0);
           }
-          100% {
-            transform: translateX(calc(-100% / 3));
+          to {
+            transform: translateX(calc(-50% - 12px));
           }
         }
         
-        .animate-slide {
-          animation: slide 45s linear infinite;
+        .animate-infinite-scroll {
+          animation: infinite-scroll 30s linear infinite;
         }
         
-        .animate-slide:hover {
+        .animate-infinite-scroll:hover {
           animation-play-state: paused;
         }
       `}</style>
