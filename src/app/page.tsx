@@ -1,6 +1,7 @@
 import Hero from '@/components/Hero'
 import Advantages from '@/components/Advantages'
 import ProductCards from '@/components/ProductCards'
+import Promo from '@/components/Promo'
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <Advantages />
       <ProductCards />
+      <Promo />
     </main>
   )
 }
