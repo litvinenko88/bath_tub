@@ -598,10 +598,17 @@ video {
 .font-medium {
   font-weight: 500;
 }
+.text-accent {
+  --tw-text-opacity: 1;
+  color: rgb(244 164 96 / var(--tw-text-opacity, 1));
+}
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
+.text-accent {
+    color: var(--color-orange);
+  }
 
 :root {
   /* Цвета */
@@ -952,6 +959,203 @@ video {
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-bg {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.hero-text {
+  max-width: 600px;
+  animation: slideInLeft 1s ease-out;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-subtitle {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.hero-description {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Скошенные кнопки */
+.btn-skewed {
+  position: relative;
+  padding: 16px 32px;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: skewX(-10deg);
+  overflow: hidden;
+  min-width: 180px;
+}
+
+.btn-content {
+  display: block;
+  transform: skewX(10deg);
+  position: relative;
+  z-index: 2;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-orange), #e67e22);
+  color: var(--color-white);
+  box-shadow: 0 4px 15px rgba(223, 104, 43, 0.4);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+  z-index: 1;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: skewX(-10deg) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(223, 104, 43, 0.5);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
+  color: var(--color-white);
+  border: 2px solid var(--color-white);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+  z-index: 1;
+}
+
+.btn-secondary:hover::before {
+  left: 100%;
+}
+
+.btn-secondary:hover {
+  transform: skewX(-10deg) translateY(-2px);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--color-orange);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .hero-image {
+    position: relative;
+    height: 50vh;
+    min-height: 300px;
+  }
+  
+  .hero-content {
+    position: relative;
+    padding: 2rem 1rem;
+    background: linear-gradient(to bottom, transparent, var(--color-dark));
+  }
+  
+  .hero-text {
+    max-width: 100%;
+    text-align: center;
+  }
+  
+  .hero-buttons {
+    justify-content: center;
+  }
+  
+  .btn-skewed {
+    min-width: 160px;
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn-skewed {
+    width: 100%;
+    max-width: 280px;
   }
 }
 
