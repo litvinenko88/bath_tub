@@ -1,6 +1,10 @@
 'use client'
 
+import { useState } from 'react'
+
 export default function Gallery() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  
   const images = [
     '/images/slider/car1.jpg',
     '/images/slider/car2.jpg',
@@ -27,23 +31,14 @@ export default function Gallery() {
         <div className="relative">
           <div className="overflow-hidden rounded-2xl shadow-2xl">
             <div className="flex animate-slide">
-              {/* Первый набор изображений */}
-              {images.map((image, index) => (
-                <div key={index} className="flex-shrink-0 w-80 h-60 mx-2">
+              {/* Тройной набор изображений для бесшовности */}
+              {[...images, ...images, ...images].map((image, index) => (
+                <div key={index} className="flex-shrink-0 w-96 h-72 mx-3">
                   <img
                     src={image}
-                    alt={`Банный чан ${index + 1}`}
-                    className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              ))}
-              {/* Дублированный набор для бесконечности */}
-              {images.map((image, index) => (
-                <div key={`duplicate-${index}`} className="flex-shrink-0 w-80 h-60 mx-2">
-                  <img
-                    src={image}
-                    alt={`Банный чан ${index + 1}`}
-                    className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+                    alt={`Банный чан ${(index % images.length) + 1}`}
+                    className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
+                    onClick={() => setSelectedImage(image)}
                   />
                 </div>
               ))}
@@ -56,18 +51,42 @@ export default function Gallery() {
         </div>
       </div>
 
+      {/* Модальное окно для полноэкранного просмотра */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-7xl max-h-full">
+            <img
+              src={selectedImage}
+              alt="Банный чан"
+              className="max-w-full max-h-full object-contain rounded-lg"
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       <style jsx>{`
         @keyframes slide {
           0% {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translateX(calc(-100% / 3));
           }
         }
         
         .animate-slide {
-          animation: slide 30s linear infinite;
+          animation: slide 45s linear infinite;
         }
         
         .animate-slide:hover {
