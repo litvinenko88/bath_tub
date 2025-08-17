@@ -1,21 +1,63 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [isPaused, setIsPaused] = useState(false)
+  const sliderRef = useRef<HTMLDivElement>(null)
+  const startX = useRef(0)
+  const currentX = useRef(0)
+  const isDragging = useRef(false)
   
   const images = [
-    '/images/slider/car1.jpg',
-    '/images/slider/car2.jpg',
-    '/images/slider/car3.jpg',
-    '/images/slider/car4.jpg',
-    '/images/slider/car5.jpg',
-    '/images/slider/car6.jpg',
-    '/images/slider/car7.jpg',
-    '/images/slider/car8.jpg',
-    '/images/slider/car9.jpg'
+    { src: '/images/slider/car1.jpg', alt: 'Банный чан из кедра на природе' },
+    { src: '/images/slider/car2.jpg', alt: 'Деревянный чан с подогревом' },
+    { src: '/images/slider/car3.jpg', alt: 'Семейный отдых в банном чане' },
+    { src: '/images/slider/car4.jpg', alt: 'Банный чан зимой под снегом' },
+    { src: '/images/slider/car5.jpg', alt: 'Романтический вечер в чане' },
+    { src: '/images/slider/car6.jpg', alt: 'Банный чан с видом на лес' },
+    { src: '/images/slider/car7.jpg', alt: 'Компания друзей в банном чане' },
+    { src: '/images/slider/car8.jpg', alt: 'Банный чан на террасе дома' },
+    { src: '/images/slider/car9.jpg', alt: 'Чан с гидромассажем и подсветкой' },
+    { src: '/images/slider/car10.jpg', alt: 'Банный чан у озера на рассвете' },
+    { src: '/images/slider/car11.jpg', alt: 'Элитный чан из японского кедра' },
+    { src: '/images/slider/car12.jpg', alt: 'Банный чан с панорамным видом' },
+    { src: '/images/slider/car13.jpg', alt: 'Чан для коммерческого использования' },
+    { src: '/images/slider/car14.jpg', alt: 'Банный чан в горах на закате' },
+    { src: '/images/slider/car15.jpg', alt: 'Современный чан с автоматикой' }
   ]
+
+  const handleStart = (clientX: number) => {
+    isDragging.current = true
+    setIsPaused(true)
+    startX.current = clientX
+    currentX.current = clientX
+  }
+
+  const handleMove = (clientX: number) => {
+    if (!isDragging.current || !sliderRef.current) return
+    
+    const diff = startX.current - clientX
+    sliderRef.current.style.transform = `translateX(calc(-33.333% - 8px - ${diff}px))`
+  }
+
+  const handleEnd = () => {
+    if (!isDragging.current) return
+    isDragging.current = false
+    
+    if (sliderRef.current) {
+      sliderRef.current.style.transform = ''
+    }
+    
+    setTimeout(() => setIsPaused(false), 1000)
+  }
+
+  const handleImageClick = (imageSrc: string) => {
+    if (!isDragging.current) {
+      setSelectedImage(imageSrc)
+    }
+  }
 
   return (
     <section className="py-16 sm:py-20 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
@@ -30,15 +72,29 @@ export default function Gallery() {
         {/* Слайдер */}
         <div className="relative">
           <div className="overflow-hidden rounded-2xl shadow-2xl">
-            <div className="flex animate-infinite-scroll">
-              {/* Двойной набор изображений для бесконечности */}
-              {images.concat(images).map((image, index) => (
+            <div 
+              ref={sliderRef}
+              className={`flex ${isPaused ? '' : 'animate-infinite-scroll'} cursor-grab active:cursor-grabbing select-none`}
+              onMouseDown={(e) => handleStart(e.clientX)}
+              onMouseMove={(e) => handleMove(e.clientX)}
+              onMouseUp={handleEnd}
+              onMouseLeave={handleEnd}
+              onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+              onTouchMove={(e) => {
+                e.preventDefault()
+                handleMove(e.touches[0].clientX)
+              }}
+              onTouchEnd={handleEnd}
+            >
+              {/* Тройной набор изображений для полной бесконечности */}
+              {[...images, ...images, ...images].map((image, index) => (
                 <div key={index} className="flex-shrink-0 w-96 h-72 mx-3">
                   <img
-                    src={image}
-                    alt={`Банный чан ${(index % images.length) + 1}`}
+                    src={image.src}
+                    alt={image.alt}
                     className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
-                    onClick={() => setSelectedImage(image)}
+                    onClick={() => handleImageClick(image.src)}
+                    draggable={false}
                   />
                 </div>
               ))}
@@ -81,16 +137,12 @@ export default function Gallery() {
             transform: translateX(0);
           }
           to {
-            transform: translateX(calc(-50% - 12px));
+            transform: translateX(calc(-33.333% - 8px));
           }
         }
         
         .animate-infinite-scroll {
-          animation: infinite-scroll 30s linear infinite;
-        }
-        
-        .animate-infinite-scroll:hover {
-          animation-play-state: paused;
+          animation: infinite-scroll 60s linear infinite;
         }
       `}</style>
     </section>
