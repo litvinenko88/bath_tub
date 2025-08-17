@@ -4,6 +4,7 @@ import ProductCards from '@/components/ProductCards'
 import Promo from '@/components/Promo'
 import Delivery from '@/components/Delivery'
 import Pricing from '@/components/Pricing'
+import HeatingTypes from '@/components/HeatingTypes'
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Promo />
       <Delivery />
       <Pricing />
+      <HeatingTypes />
     </main>
   )
 }
