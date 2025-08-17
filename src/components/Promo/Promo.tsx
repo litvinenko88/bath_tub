@@ -1,6 +1,49 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import Button from '../Button'
 
 export default function Promo() {
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
+  const [promoDate, setPromoDate] = useState('')
+
+  useEffect(() => {
+    const today = new Date()
+    const yesterday = new Date(today)
+    yesterday.setDate(today.getDate() - 1)
+    const tomorrow = new Date(today)
+    tomorrow.setDate(today.getDate() + 1)
+
+    const formatDate = (date: Date) => {
+      return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}`
+    }
+
+    setPromoDate(`${formatDate(yesterday)}-${formatDate(tomorrow)}`)
+
+    const endOfPromo = new Date(tomorrow)
+    endOfPromo.setHours(23, 59, 59, 999)
+
+    const updateTimer = () => {
+      const now = new Date()
+      const difference = endOfPromo.getTime() - now.getTime()
+
+      if (difference > 0) {
+        const hours = Math.floor(difference / (1000 * 60 * 60))
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+
+        setTimeLeft({ hours, minutes, seconds })
+      } else {
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 })
+      }
+    }
+
+    updateTimer()
+    const interval = setInterval(updateTimer, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <section className="relative min-h-[60vh] overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Фоновое изображение с оверлеем */}
@@ -38,20 +81,40 @@ export default function Promo() {
             
             {/* Описание акции */}
             <p className="text-xl sm:text-2xl lg:text-3xl text-gray-200 mb-4 font-light animate-fade-in-up animation-delay-400">
-              14.08-16.08 – скидки до
+              {promoDate} – скидки до
               <span className="text-orange-400 font-bold"> 40%</span>
             </p>
             
-            <p className="text-base sm:text-lg text-gray-300 mb-2 max-w-2xl mx-auto sm:mx-0 animate-fade-in-up animation-delay-600">
+            <p className="text-base sm:text-lg text-gray-300 mb-4 max-w-2xl mx-auto sm:mx-0 animate-fade-in-up animation-delay-600">
               на банные чаны из нержавеющей стали!
             </p>
+
+            {/* Таймер */}
+            <div className="mb-6 animate-fade-in-up animation-delay-700">
+              <div className="inline-flex items-center gap-2 bg-black/30 backdrop-blur-sm rounded-lg px-4 py-2 border border-orange-400/30">
+                <span className="text-sm text-gray-300">До конца акции:</span>
+                <div className="flex items-center gap-1 text-orange-400 font-mono font-bold">
+                  <span className="bg-orange-500/20 px-2 py-1 rounded text-sm">
+                    {timeLeft.hours.toString().padStart(2, '0')}
+                  </span>
+                  <span>:</span>
+                  <span className="bg-orange-500/20 px-2 py-1 rounded text-sm">
+                    {timeLeft.minutes.toString().padStart(2, '0')}
+                  </span>
+                  <span>:</span>
+                  <span className="bg-orange-500/20 px-2 py-1 rounded text-sm">
+                    {timeLeft.seconds.toString().padStart(2, '0')}
+                  </span>
+                </div>
+              </div>
+            </div>
             
-            <p className="text-sm text-gray-400 italic mb-8 max-w-2xl mx-auto sm:mx-0 animate-fade-in-up animation-delay-700">
+            <p className="text-sm text-gray-400 italic mb-8 max-w-2xl mx-auto sm:mx-0 animate-fade-in-up animation-delay-800">
               (Уточняйте акционные модели у менеджера)
             </p>
             
             {/* Кнопка */}
-            <div className="animate-fade-in-up animation-delay-800">
+            <div className="animate-fade-in-up animation-delay-900">
               <Button variant="primary" className="transform hover:scale-105 transition-all duration-300">
                 Узнать подробности
               </Button>
