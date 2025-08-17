@@ -3,6 +3,7 @@ import './globals.css'
 import Header from '@/components/Header/Header'
 import CursorSteam from '@/components/CursorSteam'
 import ContactBar from '@/components/ContactBar'
+import ScrollToTop from '@/components/ScrollToTop'
 
 export const metadata: Metadata = {
   title: '🔥 Банный чан от производителя 🔥 | Купить купель для купания 🏊♂️ | Гарантия 10 лет 💯',
@@ -28,6 +29,7 @@ export default function RootLayout({
         <Header />
         {children}
         <ContactBar />
+        <ScrollToTop />
       </body>
     </html>
   )

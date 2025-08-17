@@ -1,6 +1,6 @@
 interface MobileMenuProps {
   isMenuOpen: boolean
-  menuItems: string[]
+  menuItems: { name: string; href: string }[]
   onClose: () => void
 }
 
@@ -14,17 +14,33 @@ export default function MobileMenu({ isMenuOpen, menuItems, onClose }: MobileMen
           <button className="consultation-btn-mobile">
             Консультация
           </button>
-          {menuItems.map((item, index) => (
-            <a
-              key={item}
-              href="#"
-              className="mobile-nav-item"
-              style={{ animationDelay: isMenuOpen ? `${index * 0.1}s` : '0s' }}
-              onClick={onClose}
-            >
-              {item}
-            </a>
-          ))}
+          {menuItems.map((item, index) => {
+            const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+              if (item.href === '#pricing') {
+                onClose()
+                return
+              }
+              
+              e.preventDefault()
+              const element = document.querySelector(item.href)
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' })
+              }
+              onClose()
+            }
+
+            return (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={handleClick}
+                className="mobile-nav-item"
+                style={{ animationDelay: isMenuOpen ? `${index * 0.1}s` : '0s' }}
+              >
+                {item.name}
+              </a>
+            )
+          })}
         </nav>
       </div>
 

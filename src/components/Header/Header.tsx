@@ -11,12 +11,12 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const menuItems = [
-    'Каталог',
-    'Рассчитать стоимость',
-    'Доставка',
-    'Типы нагрева',
-    'О компании',
-    'Контакты'
+    { name: 'Каталог', href: '#catalog' },
+    { name: 'Рассчитать стоимость', href: '#pricing' },
+    { name: 'Доставка', href: '#delivery' },
+    { name: 'Типы нагрева', href: '#heating' },
+    { name: 'О компании', href: '#about' },
+    { name: 'Контакты', href: '#contacts' }
   ]
 
   return (

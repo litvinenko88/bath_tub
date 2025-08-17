@@ -18,18 +18,30 @@ export default function Home() {
       <main>
         <Hero />
         <Advantages />
-        <ProductCards />
+        <section id="catalog">
+          <ProductCards />
+        </section>
         <Promo />
-        <Delivery />
-        <Pricing />
-        <HeatingTypes />
+        <section id="delivery">
+          <Delivery />
+        </section>
+        <section id="pricing">
+          <Pricing />
+        </section>
+        <section id="heating">
+          <HeatingTypes />
+        </section>
         <Gallery />
         <Features />
         <Benefits />
         <FAQ />
-        <About />
+        <section id="about">
+          <About />
+        </section>
       </main>
-      <Footer />
+      <section id="contacts">
+        <Footer />
+      </section>
     </>
   )
 }
