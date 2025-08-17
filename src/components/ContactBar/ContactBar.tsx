@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import OperatorChat from '@/components/OperatorChat'
 
 const ContactBar = () => {
   const [showAllButtons, setShowAllButtons] = useState(false)
@@ -82,6 +83,9 @@ const ContactBar = () => {
           </div>
         </a>
       </div>
+      
+      {/* Компонент чата */}
+      <OperatorChat onChatOpen={() => {}} />
     </div>
   )
 }
