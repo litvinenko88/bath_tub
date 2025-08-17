@@ -1,9 +1,11 @@
+import Link from 'next/link'
+
 export default function Logo() {
   return (
-    <div className="logo-container">
+    <Link href="/" className="logo-container">
       <div className="logo-text">
         <span className="text-white font-medium text-lg sm:text-xl">NOVA</span>
       </div>
-    </div>
+    </Link>
   )
 }
