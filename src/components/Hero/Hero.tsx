@@ -20,8 +20,8 @@ export default function Hero() {
       
       {/* Контент */}
       <div className="relative z-10 flex items-center min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center lg:text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="text-center sm:text-left">
             {/* Бейдж */}
             <div className="inline-flex items-center px-4 py-2 mb-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-medium text-white animate-fade-in-up">
               <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
@@ -43,12 +43,12 @@ export default function Hero() {
             </p>
             
             {/* Описание */}
-            <p className="text-base sm:text-lg text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 animate-fade-in-up animation-delay-600">
+            <p className="text-base sm:text-lg text-gray-300 mb-8 max-w-2xl mx-auto sm:mx-0 animate-fade-in-up animation-delay-600">
               Изготовление и доставка по всей России за 5-10 дней. Качество, проверенное временем.
             </p>
             
             {/* Преимущества */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-10 animate-fade-in-up animation-delay-800">
+            <div className="flex flex-wrap justify-center sm:justify-start gap-4 mb-10 animate-fade-in-up animation-delay-800">
               <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
                 <svg className="w-5 h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -70,7 +70,7 @@ export default function Hero() {
             </div>
             
             {/* Кнопки */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up animation-delay-1000">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start animate-fade-in-up animation-delay-1000">
               <Button variant="primary" className="transform hover:scale-105 transition-all duration-300">
                 Посмотреть каталог
               </Button>
@@ -81,7 +81,7 @@ export default function Hero() {
             
             {/* Дополнительная информация */}
             <div className="mt-12 pt-8 border-t border-white/20 animate-fade-in-up animation-delay-1200">
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 text-sm text-gray-400">
+              <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-6 text-sm text-gray-400">
                 <div className="flex items-center">
                   <svg className="w-5 h-5 text-orange-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
