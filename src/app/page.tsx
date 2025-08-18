@@ -11,6 +11,7 @@ import Benefits from '@/components/Benefits'
 import FAQ from '@/components/FAQ'
 import About from '@/components/About'
 import Footer from '@/components/Footer'
+import ScrollQuizModal from '@/components/ScrollQuizModal'
 
 export default function Home() {
   return (
@@ -42,6 +43,7 @@ export default function Home() {
       <section id="contacts">
         <Footer />
       </section>
+      <ScrollQuizModal />
     </>
   )
 }
