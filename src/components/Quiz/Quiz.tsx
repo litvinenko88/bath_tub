@@ -6,6 +6,8 @@ interface QuizOption {
   id: string
   title: string
   description?: string
+  image?: string
+  mainImage?: string
 }
 
 interface QuizStep {
@@ -24,20 +26,26 @@ interface QuizProps {
 const quizSteps: QuizStep[] = [
   {
     id: 1,
-    title: "Создание уникального чана",
+    title: "Соберите свой уникальный чан",
     question: "Какой размер банного чана вам нужен?",
     options: [
       {
         id: "size-6",
         title: "6 граней / вместимость 4 чел / диаметр Ø 1700мм",
+        image: "/images/products/shan 1.1.jpg",
+        mainImage: "/images/products/shan 1.jpg"
       },
       {
         id: "size-8", 
         title: "8 граней / вместимость 6 чел / диаметр Ø 1900мм",
+        image: "/images/products/shan 2.2.jpg",
+        mainImage: "/images/products/shan 2.jpg"
       },
       {
         id: "size-10",
         title: "10 граней / вместимость 10 чел / диаметр Ø 2300мм",
+        image: "/images/products/shan 3.3.jpg",
+        mainImage: "/images/products/shan 3.jpg"
       }
     ]
   },
@@ -115,6 +123,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
   const [answers, setAnswers] = useState<Record<number, string[]>>({})
   const [isVisible, setIsVisible] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
+  const [selectedMainImage, setSelectedMainImage] = useState("/images/products/shan 1.jpg")
 
   useEffect(() => {
     if (isOpen) {
@@ -130,12 +139,23 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
     }
   }, [isOpen])
 
+  useEffect(() => {
+    if (currentStep === 1) {
+      setSelectedMainImage("/images/products/shan 1.jpg")
+    }
+  }, [currentStep])
+
   const currentStepData = quizSteps.find(step => step.id === currentStep)
   const totalSteps = quizSteps.length
 
   const handleOptionSelect = (optionId: string) => {
     const stepData = quizSteps.find(step => step.id === currentStep)
     if (!stepData) return
+
+    const selectedOption = stepData.options.find(opt => opt.id === optionId)
+    if (selectedOption?.mainImage) {
+      setSelectedMainImage(selectedOption.mainImage)
+    }
 
     if (stepData.multiSelect) {
       const currentAnswers = answers[currentStep] || []
@@ -152,6 +172,15 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
         ...prev,
         [currentStep]: [optionId]
       }))
+      
+      // Автоматический переход к следующему вопросу
+      setTimeout(() => {
+        if (currentStep < totalSteps) {
+          setCurrentStep(prev => prev + 1)
+        } else {
+          setIsCompleted(true)
+        }
+      }, 800)
     }
   }
 
@@ -159,18 +188,8 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1)
     } else {
-      // Завершение квиза
       setIsCompleted(true)
     }
-  }
-
-  const handleComplete = () => {
-    console.log('Quiz completed:', answers)
-    // Здесь можно отправить данные на сервер
-    onClose()
-    setIsCompleted(false)
-    setCurrentStep(1)
-    setAnswers({})
   }
 
   const handleBack = () => {
@@ -182,6 +201,30 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
   const isStepCompleted = () => {
     const stepAnswers = answers[currentStep] || []
     return stepAnswers.length > 0
+  }
+
+  const handleComplete = () => {
+    console.log('Quiz completed:', answers)
+    onClose()
+    setIsCompleted(false)
+    setCurrentStep(1)
+    setAnswers({})
+  }
+
+  const getSelectedAnswersText = () => {
+    const selectedAnswers: string[] = []
+    Object.entries(answers).forEach(([stepId, answerIds]) => {
+      const step = quizSteps.find(s => s.id === parseInt(stepId))
+      if (step) {
+        answerIds.forEach(answerId => {
+          const option = step.options.find(opt => opt.id === answerId)
+          if (option) {
+            selectedAnswers.push(option.title)
+          }
+        })
+      }
+    })
+    return selectedAnswers.join(', ')
   }
 
   if (!isOpen) return null
@@ -227,106 +270,117 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
       />
       
       {/* Quiz Container */}
-      <div className={`relative h-full flex items-center justify-center p-4 transition-transform duration-500 ${isVisible ? 'scale-100' : 'scale-95'}`}>
-        <div className="quiz-container bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden animate-slide-in-bottom">
-          {/* Header */}
-          <div className="quiz-header bg-gradient-to-r from-slate-800 to-slate-900 text-white p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold">Расчет стоимости уникального чана</h2>
-              <button
-                onClick={onClose}
-                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+      <div className="relative h-full flex items-center justify-center p-4">
+        <div 
+          className="quiz-container bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden animate-slide-in-bottom"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header with Close Button */}
+          <div className="relative p-6 pb-4">
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
             
-            {/* Progress */}
-            <div className="mb-4">
-              <div className="flex justify-between text-sm mb-2">
-                <span>Шаг {currentStep} из {totalSteps}</span>
-                <span>{Math.round((currentStep / totalSteps) * 100)}%</span>
-              </div>
-              <div className="w-full bg-white/20 rounded-full h-2">
-                <div 
-                  className="progress-bar bg-orange-400 h-2 rounded-full transition-all duration-500"
-                  style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+            {/* Progress Dots */}
+            <div className="flex justify-center mb-4 mt-2">
+              {Array.from({ length: totalSteps }, (_, i) => (
+                <div
+                  key={i}
+                  className={`w-3 h-3 rounded-full mx-1 transition-colors ${
+                    i + 1 <= currentStep ? 'bg-orange-400' : 'bg-gray-300'
+                  }`}
                 />
-              </div>
+              ))}
             </div>
             
-            <h3 className="text-xl font-semibold">{currentStepData?.title}</h3>
+            {/* Question Counter */}
+            <div className="text-sm text-gray-600 mb-2">
+              Вопрос {currentStep} из {totalSteps}
+            </div>
+            
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">{currentStepData?.title}</h2>
           </div>
 
           {/* Content */}
-          <div className="quiz-content p-6 overflow-y-auto max-h-[60vh]">
-            <h4 className="text-lg font-semibold text-gray-800 mb-6">
-              {currentStepData?.question}
-            </h4>
-
-            <div className="space-y-4">
-              {currentStepData?.options.map((option) => {
-                const isSelected = answers[currentStep]?.includes(option.id) || false
+          <div className="px-6 pb-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Left Side - Main Image */}
+              <div className="space-y-4">
+                <div className="aspect-square rounded-xl overflow-hidden bg-gray-100">
+                  <img 
+                    src={selectedMainImage} 
+                    alt="Банный чан"
+                    className="w-full h-full object-cover transition-all duration-500"
+                  />
+                </div>
                 
-                return (
-                  <div
-                    key={option.id}
-                    onClick={() => handleOptionSelect(option.id)}
-                    className={`quiz-option-card p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md animate-slide-in-right ${
-                      isSelected 
-                        ? 'border-orange-400 bg-orange-50 shadow-lg selected' 
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                    style={{ animationDelay: `${currentStepData?.options.indexOf(option) * 0.1}s` }}
-                  >
-                    <div className="flex items-start">
-                      <div className={`w-5 h-5 rounded-full border-2 mr-3 mt-0.5 flex-shrink-0 transition-colors ${
+                {/* Selected Answers */}
+                <div className="flex justify-between items-end">
+                  <div className="text-sm text-gray-600 max-w-xs">
+                    {getSelectedAnswersText()}
+                  </div>
+                  
+                  {isStepCompleted() && (
+                    <button
+                      onClick={handleNext}
+                      className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                    >
+                      {currentStep === totalSteps ? 'Получить расчет' : 'Далее →'}
+                    </button>
+                  )}
+                </div>
+              </div>
+              
+              {/* Right Side - Options */}
+              <div className="space-y-4">
+                {currentStepData?.options.map((option) => {
+                  const isSelected = answers[currentStep]?.includes(option.id) || false
+                  
+                  return (
+                    <div
+                      key={option.id}
+                      onClick={() => handleOptionSelect(option.id)}
+                      className={`flex items-center p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${
+                        isSelected 
+                          ? 'border-orange-400 bg-orange-50 shadow-lg' 
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      {option.image && (
+                        <div className="w-16 h-16 rounded-lg overflow-hidden mr-4 flex-shrink-0">
+                          <img 
+                            src={option.image} 
+                            alt={option.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      
+                      <div className="flex-1">
+                        <h5 className="font-medium text-gray-800 mb-1">{option.title}</h5>
+                        {option.description && (
+                          <p className="text-sm text-gray-600">{option.description}</p>
+                        )}
+                      </div>
+                      
+                      <div className={`w-5 h-5 rounded-full border-2 ml-3 flex-shrink-0 transition-colors ${
                         isSelected ? 'border-orange-400 bg-orange-400' : 'border-gray-300'
                       }`}>
                         {isSelected && (
                           <div className="w-full h-full rounded-full bg-white scale-50" />
                         )}
                       </div>
-                      <div>
-                        <h5 className="font-medium text-gray-800 mb-1">{option.title}</h5>
-                        {option.description && (
-                          <p className="text-sm text-gray-600">{option.description}</p>
-                        )}
-                      </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+              </div>
             </div>
-          </div>
-
-          {/* Footer */}
-          <div className="quiz-footer p-6 bg-gray-50 border-t flex justify-between">
-            <button
-              onClick={handleBack}
-              disabled={currentStep === 1}
-              className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                currentStep === 1
-                  ? 'text-gray-400 cursor-not-allowed'
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'
-              }`}
-            >
-              ← Назад
-            </button>
-            
-            <button
-              onClick={handleNext}
-              disabled={!isStepCompleted()}
-              className={`px-8 py-3 rounded-lg font-medium transition-all ${
-                isStepCompleted()
-                  ? 'bg-orange-500 hover:bg-orange-600 text-white shadow-lg hover:shadow-xl'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
-            >
-              {currentStep === totalSteps ? 'Получить расчет' : 'Далее →'}
-            </button>
           </div>
         </div>
       </div>
