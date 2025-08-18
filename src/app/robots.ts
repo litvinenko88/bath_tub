@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/api/',
     },
-    sitemap: 'https://bath-tubs.ru/sitemap.xml',
+    sitemap: 'https://nova-bathtub.ru/sitemap.xml',
   }
 }

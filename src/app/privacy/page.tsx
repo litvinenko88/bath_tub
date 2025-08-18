@@ -3,6 +3,9 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Политика конфиденциальности | Банные Чаны',
   description: 'Политика конфиденциальности сайта банных чанов. Информация о сборе и использовании персональных данных.',
+  alternates: {
+    canonical: 'https://nova-bathtub.ru/privacy'
+  }
 }
 
 export default function PrivacyPage() {
