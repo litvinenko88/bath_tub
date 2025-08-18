@@ -322,16 +322,16 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
               <div className="h-full flex flex-col">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Соберите свой уникальный чан</h2>
                 
-                <div className="w-full max-w-sm h-96 rounded-xl overflow-hidden bg-gray-100 mb-4">
+                <div className="flex-1 rounded-xl overflow-hidden bg-gray-100 mb-4">
                   <img 
                     src={selectedMainImage} 
                     alt="Банный чан"
-                    className="w-full h-full object-contain transition-all duration-500"
+                    className="w-full h-full object-cover transition-all duration-500"
                   />
                 </div>
                 
                 {/* Selected Answers */}
-                <div className="flex-1 space-y-1 max-w-80 min-h-[120px]">
+                <div className="space-y-1 min-h-[120px]">
                   {getFormattedAnswers().map((answer, index) => (
                     <div key={index} className="text-xs text-gray-600 break-words leading-relaxed">
                       <span className="font-bold text-gray-800">{answer.category}:</span> <span className="font-normal">{answer.value}</span>
