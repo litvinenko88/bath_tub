@@ -207,20 +207,35 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
     setAnswers({})
   }
 
-  const getSelectedAnswersText = () => {
-    const selectedAnswers: string[] = []
+  const getFormattedAnswers = () => {
+    const formattedAnswers: { category: string, value: string }[] = []
+    
     Object.entries(answers).forEach(([stepId, answerIds]) => {
       const step = quizSteps.find(s => s.id === parseInt(stepId))
       if (step) {
         answerIds.forEach(answerId => {
           const option = step.options.find(opt => opt.id === answerId)
           if (option) {
-            selectedAnswers.push(option.title)
+            if (step.id === 1) {
+              // Для первого вопроса - размер чана
+              const characteristics = option.description?.replace(/\n/g, ', ') || ''
+              formattedAnswers.push({
+                category: 'Размер чана',
+                value: `${option.title.replace('Банный чан ', '')}, ${characteristics}`
+              })
+            } else {
+              // Для остальных вопросов
+              formattedAnswers.push({
+                category: step.title,
+                value: option.title
+              })
+            }
           }
         })
       }
     })
-    return selectedAnswers.join(', ')
+    
+    return formattedAnswers
   }
 
   if (!isOpen) return null
@@ -268,7 +283,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
       {/* Quiz Container */}
       <div className="relative h-full flex items-center justify-center p-4">
         <div 
-          className="quiz-container bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden animate-slide-in-bottom relative"
+          className="quiz-container bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[700px] overflow-hidden animate-slide-in-bottom relative"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header with Close Button */}
@@ -304,22 +319,24 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
           <div className="px-6 pb-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left Side - Main Image */}
-              <div className="space-y-4">
+              <div className="h-full flex flex-col">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Соберите свой уникальный чан</h2>
                 
-                <div className="aspect-square rounded-xl overflow-hidden bg-gray-100">
+                <div className="w-full max-w-sm h-96 rounded-xl overflow-hidden bg-gray-100 mb-4">
                   <img 
                     src={selectedMainImage} 
                     alt="Банный чан"
-                    className="w-full h-full object-cover transition-all duration-500"
+                    className="w-full h-full object-contain transition-all duration-500"
                   />
                 </div>
                 
-                {/* Selected Answers and Next Button */}
-                <div className="flex justify-between items-end">
-                  <div className="text-sm text-gray-600 max-w-xs">
-                    {getSelectedAnswersText()}
-                  </div>
+                {/* Selected Answers */}
+                <div className="flex-1 space-y-1 max-w-80 min-h-[120px]">
+                  {getFormattedAnswers().map((answer, index) => (
+                    <div key={index} className="text-xs text-gray-600 break-words leading-relaxed">
+                      <span className="font-bold text-gray-800">{answer.category}:</span> <span className="font-normal">{answer.value}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
               
