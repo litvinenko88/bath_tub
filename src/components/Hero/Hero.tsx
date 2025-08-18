@@ -1,9 +1,14 @@
 'use client'
 
+import { useState } from 'react'
 import Button from '../Button'
+import Quiz from '../Quiz'
 
 export default function Hero() {
+  const [isQuizOpen, setIsQuizOpen] = useState(false)
+
   return (
+    <>
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Фоновое изображение с оверлеем */}
       <div className="absolute inset-0">
@@ -91,7 +96,11 @@ export default function Hero() {
                   Посмотреть каталог
                 </Button>
               </a>
-              <Button variant="secondary" className="transform hover:scale-105 transition-all duration-300">
+              <Button 
+                variant="secondary" 
+                className="transform hover:scale-105 transition-all duration-300"
+                onClick={() => setIsQuizOpen(true)}
+              >
                 Рассчитать стоимость
               </Button>
             </div>
@@ -130,5 +139,8 @@ export default function Hero() {
         </div>
       </div>
     </section>
+    
+    <Quiz isOpen={isQuizOpen} onClose={() => setIsQuizOpen(false)} />
+    </>
   )
 }

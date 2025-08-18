@@ -574,11 +574,100 @@
   animation: gradient-shift 3s ease infinite;
 }
 
+/* Анимации для квиза */
+@keyframes slideInFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-bottom {
+  animation: slideInFromBottom 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.3s ease-out forwards;
+}
+
+/* Стили для прогресс-бара */
+.progress-bar {
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Стили для карточек опций */
+.quiz-option-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.quiz-option-card:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.quiz-option-card.selected {
+  animation: selectPulse 0.4s ease-out;
+}
+
+@keyframes selectPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 
 
 
 
+
+
+/* Стили для мобильной адаптации квиза */
+@media (max-width: 768px) {
+  .quiz-container {
+    margin: 1rem;
+    max-height: 95vh;
+  }
+  
+  .quiz-header {
+    padding: 1rem;
+  }
+  
+  .quiz-content {
+    padding: 1rem;
+    max-height: 50vh;
+  }
+  
+  .quiz-footer {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .quiz-footer button {
+    width: 100%;
+  }
+}
 
 /* Адаптивность для заголовков */
 @media (max-width: 768px) {
