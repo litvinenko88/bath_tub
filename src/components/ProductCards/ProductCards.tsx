@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Quiz from '../Quiz'
 
 export default function ProductCards() {
@@ -87,10 +88,13 @@ export default function ProductCards() {
             >
               {/* Основное изображение */}
               <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden rounded-t-lg">
-                <img 
+                <Image 
                   src={product.mainImage} 
                   alt={product.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  width={400}
+                  height={300}
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
@@ -128,10 +132,13 @@ export default function ProductCards() {
                   
                   {/* Изображение характеристик */}
                   <div className="ml-4 w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0">
-                    <img 
+                    <Image 
                       src={product.specImage} 
                       alt={`Схема ${product.name}`}
                       className="w-full h-full object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110"
+                      width={80}
+                      height={80}
+                      loading="lazy"
                     />
                   </div>
                 </div>

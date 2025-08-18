@@ -6,6 +6,7 @@ import ContactBar from '@/components/ContactBar'
 import ScrollToTop from '@/components/ScrollToTop'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://nova-bathtub.ru'),
   title: '🔥 Банный чан от производителя 🔥 | Купить купель для купания 🏊♂️ | Гарантия 10 лет 💯',
   description: 'Банные чаны от производителя! 🔥 Купить купель для купания с подогревом по выгодной цене. 🏊♂️ Доставка по всей России и СНГ! Изготовление под заказ.',
   keywords: 'банный чан купить, сибирский чан, купель с подогревом, уличная баня, чан на дровах цена, купель для дачи, банный чан с печкой, купить чан для бани',
@@ -31,7 +32,19 @@ export default function RootLayout({
     <html lang="ru">
       <head>
         <meta name="google-site-verification" content="HE6MqMZdcZ7IIv2Yv9n3ZxGSZZpu8ms2LJlcbG85jGE" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#f97316" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Nova Bathtub" />
+        <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <link rel="canonical" href="https://nova-bathtub.ru" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=TT+Prosto+Sans:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
@@ -55,7 +68,10 @@ export default function RootLayout({
                 "@type": "ContactPoint",
                 "telephone": "+7-800-000-0000",
                 "contactType": "customer service"
-              }
+              },
+              "sameAs": [
+                "https://nova-bathtub.ru"
+              ]
             })
           }}
         />

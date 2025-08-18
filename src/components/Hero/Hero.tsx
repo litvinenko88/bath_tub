@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Button from '../Button'
 import Quiz from '../Quiz'
 
@@ -12,13 +13,13 @@ export default function Hero() {
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Фоновое изображение с оверлеем */}
       <div className="absolute inset-0">
-        <img 
+        <Image 
           src="/images/glavn-fonts.jpg" 
           alt="Банный чан с подогревом под открытым небом"
           className="w-full h-full object-cover object-right"
-          loading="eager"
-          width="1920"
-          height="1080"
+          priority
+          fill
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-slate-900/40"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent"></div>

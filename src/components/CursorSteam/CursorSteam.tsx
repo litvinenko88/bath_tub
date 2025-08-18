@@ -1,30 +1,46 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 export default function CursorSteam() {
   const [particles, setParticles] = useState<Array<{id: number, x: number, y: number}>>([])
+  const timeoutsRef = useRef<Set<NodeJS.Timeout>>(new Set())
+  const lastMoveRef = useRef<number>(0)
+
+  const addParticle = useCallback((x: number, y: number) => {
+    const newParticle = {
+      id: Date.now() + Math.random(),
+      x,
+      y
+    }
+    
+    setParticles(prev => [...prev.slice(-5), newParticle])
+    
+    const timeout = setTimeout(() => {
+      setParticles(prev => prev.filter(p => p.id !== newParticle.id))
+      timeoutsRef.current.delete(timeout)
+    }, 1000)
+    
+    timeoutsRef.current.add(timeout)
+  }, [])
 
   useEffect(() => {
-    let particleId = 0
-
     const handleMouseMove = (e: MouseEvent) => {
-      const newParticle = {
-        id: particleId++,
-        x: e.clientX,
-        y: e.clientY
-      }
+      const now = Date.now()
+      if (now - lastMoveRef.current < 100) return
+      lastMoveRef.current = now
       
-      setParticles(prev => [...prev, newParticle])
-      
-      setTimeout(() => {
-        setParticles(prev => prev.filter(p => p.id !== newParticle.id))
-      }, 2000)
+      requestAnimationFrame(() => addParticle(e.clientX, e.clientY))
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      timeoutsRef.current.forEach(timeout => clearTimeout(timeout))
+      timeoutsRef.current.clear()
+    }
+  }, [addParticle])
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50">

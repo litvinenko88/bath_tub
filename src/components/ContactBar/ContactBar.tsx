@@ -6,15 +6,23 @@ const ContactBar = () => {
   const [showAllButtons, setShowAllButtons] = useState(false)
 
   useEffect(() => {
+    let ticking = false
+    
     const handleScroll = () => {
-      const thirdSection = document.querySelector('main > *:nth-child(3)')
-      if (thirdSection) {
-        const rect = thirdSection.getBoundingClientRect()
-        setShowAllButtons(rect.top <= window.innerHeight)
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const thirdSection = document.querySelector('main > *:nth-child(3)')
+          if (thirdSection) {
+            const rect = thirdSection.getBoundingClientRect()
+            setShowAllButtons(rect.top <= window.innerHeight)
+          }
+          ticking = false
+        })
+        ticking = true
       }
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 

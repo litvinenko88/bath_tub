@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
@@ -37,11 +38,14 @@ export default function Gallery() {
           <div className="flex animate-scroll" style={{ width: `${allImages.length * 400}px` }}>
             {allImages.map((image, index) => (
               <div key={index} className="flex-shrink-0 w-96 h-72 mx-2">
-                <img
+                <Image
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
                   onClick={() => setSelectedImage(image.src)}
+                  width={400}
+                  height={300}
+                  loading="lazy"
                 />
               </div>
             ))}
