@@ -60,14 +60,14 @@ const quizSteps: QuizStep[] = [
       {
         id: "form-grannaya",
         title: "Граненная",
-        image: "/images/quiz/quiz1.1.webp",
-        mainImage: "/images/quiz/quiz1.webp"
+        image: "/images/quiz/quiz1.1.png",
+        mainImage: "/images/quiz/quiz1.png"
       },
       {
         id: "form-brilliant",
         title: "Бриллиантовая",
-        image: "/images/quiz/quiz1.2.jpg",
-        mainImage: "/images/quiz/quiz1.webp"
+        image: "/images/quiz/quiz1.2.png",
+        mainImage: "/images/quiz/quiz1.png"
       }
     ]
   },
@@ -168,7 +168,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
         setSelectedMainImage("/images/products/shan 1.jpg")
         break
       case 2:
-        setSelectedMainImage("/images/quiz/quiz1.webp")
+        setSelectedMainImage("/images/quiz/quiz1.png")
         break
       default:
         // Для остальных вопросов оставляем текущее изображение
@@ -372,7 +372,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
               <div className="space-y-6">
                 <h3 className="text-lg font-semibold text-gray-800">{currentStepData?.question}</h3>
                 
-                <div className="grid grid-cols-3 gap-4">
+                <div className={`${currentStep === 2 ? 'grid grid-cols-1 gap-4' : 'grid grid-cols-3 gap-4'}`}>
                   {currentStepData?.options.map((option) => {
                     const isSelected = answers[currentStep]?.includes(option.id) || false
                     
@@ -380,14 +380,14 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                       <div
                         key={option.id}
                         onClick={() => handleOptionSelect(option.id)}
-                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md text-center ${
+                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${currentStep === 2 ? 'flex items-center' : 'text-center'} ${
                           isSelected 
                             ? 'border-orange-400 bg-orange-50 shadow-lg' 
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
                         {option.image && (
-                          <div className="w-full h-24 rounded-lg overflow-hidden mb-3 bg-gray-100">
+                          <div className={`${currentStep === 2 ? 'w-24 h-24 mr-4 flex-shrink-0' : 'w-full h-24 mb-3'} rounded-lg overflow-hidden bg-gray-100`}>
                             <img 
                               src={option.image} 
                               alt={option.title}
@@ -396,17 +396,19 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                           </div>
                         )}
                         
-                        <h5 className="font-bold text-gray-800 text-sm mb-2 leading-tight">{option.title}</h5>
+                        <div className={`${currentStep === 2 ? 'flex-1' : ''}`}>
+                          <h5 className="font-bold text-gray-800 text-sm mb-2 leading-tight">{option.title}</h5>
+                          
+                          {option.description && (
+                            <div className="text-xs text-gray-500 mb-3 leading-relaxed">
+                              {option.description.split('\n').map((line, index) => (
+                                <div key={index}>{line}</div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                         
-                        {option.description && (
-                          <div className="text-xs text-gray-500 mb-3 leading-relaxed">
-                            {option.description.split('\n').map((line, index) => (
-                              <div key={index}>{line}</div>
-                            ))}
-                          </div>
-                        )}
-                        
-                        <div className={`w-5 h-5 rounded-full border-2 mx-auto transition-colors ${
+                        <div className={`w-5 h-5 rounded-full border-2 ${currentStep === 2 ? 'ml-4 flex-shrink-0' : 'mx-auto'} transition-colors ${
                           isSelected ? 'border-orange-400 bg-orange-400' : 'border-gray-300'
                         }`}>
                           {isSelected && (
