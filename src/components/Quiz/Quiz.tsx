@@ -269,7 +269,6 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
   }
 
   const handleComplete = () => {
-    console.log('Quiz completed:', answers)
     handleClose()
   }
 

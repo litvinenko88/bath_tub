@@ -39,10 +39,10 @@ export default function Home() {
         <section id="about">
           <About />
         </section>
+        <section id="contacts">
+          <Footer />
+        </section>
       </main>
-      <section id="contacts">
-        <Footer />
-      </section>
       <ScrollQuizModal />
     </>
   )

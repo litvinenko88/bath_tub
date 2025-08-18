@@ -1,6 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+const quizSteps = [
+  { id: 1, title: 'Размер чана', options: [
+    { id: 'size-6', title: 'Банный чан "Алтай"', description: '6 граней, Вместимость 4 чел, Диаметр Ø 1700мм' },
+    { id: 'size-8', title: 'Банный чан "Сибирь"', description: '8 граней, Вместимость 6 чел, Диаметр Ø 1900мм' },
+    { id: 'size-10', title: 'Банный чан "Тайга"', description: '10 граней, Вместимость 10 чел, Диаметр Ø 2300мм' }
+  ]},
+  { id: 2, title: 'Форма чана', options: [
+    { id: 'form-grannaya', title: 'Граненная' },
+    { id: 'form-brilliant', title: 'Бриллиантовая' }
+  ]},
+  { id: 3, title: 'Тип нагрева', options: [
+    { id: 'heating-wood', title: 'Электропечь' },
+    { id: 'heating-fire', title: 'Подогрев от костра' },
+    { id: 'heating-gas', title: 'Газовая печь' }
+  ]},
+  { id: 4, title: 'Тип установки', options: [
+    { id: 'install-wood', title: 'Монтаж чана на деревянные срубы' },
+    { id: 'install-metal', title: 'Установка на металлическую подставку' }
+  ]},
+  { id: 5, title: 'Дополнения', options: [
+    { id: 'addon-hydro', title: 'Гидромассажная система' },
+    { id: 'addon-led', title: 'Многоцветная LED-подсветка' },
+    { id: 'addon-audio', title: 'Встроенная аудиосистема' },
+    { id: 'addon-table', title: 'Складной сервировочный столик' }
+  ]}
+]
+
 export async function POST(request: NextRequest) {
+  // Проверяем наличие переменных окружения
+  if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
+    return NextResponse.json(
+      { error: 'Telegram configuration missing' },
+      { status: 500 }
+    )
+  }
+
   try {
     const { name, phone, source, quizData } = await request.json()
 
@@ -11,33 +46,6 @@ export async function POST(request: NextRequest) {
     // Форматируем данные квиза если они есть
     const formatQuizData = () => {
       if (!quizData || Object.keys(quizData).length === 0) return ''
-      
-      const quizSteps = [
-        { id: 1, title: 'Размер чана', options: [
-          { id: 'size-6', title: 'Банный чан "Алтай"', description: '6 граней, Вместимость 4 чел, Диаметр Ø 1700мм' },
-          { id: 'size-8', title: 'Банный чан "Сибирь"', description: '8 граней, Вместимость 6 чел, Диаметр Ø 1900мм' },
-          { id: 'size-10', title: 'Банный чан "Тайга"', description: '10 граней, Вместимость 10 чел, Диаметр Ø 2300мм' }
-        ]},
-        { id: 2, title: 'Форма чана', options: [
-          { id: 'form-grannaya', title: 'Граненная' },
-          { id: 'form-brilliant', title: 'Бриллиантовая' }
-        ]},
-        { id: 3, title: 'Тип нагрева', options: [
-          { id: 'heating-wood', title: 'Электропечь' },
-          { id: 'heating-fire', title: 'Подогрев от костра' },
-          { id: 'heating-gas', title: 'Газовая печь' }
-        ]},
-        { id: 4, title: 'Тип установки', options: [
-          { id: 'install-wood', title: 'Монтаж чана на деревянные срубы' },
-          { id: 'install-metal', title: 'Установка на металлическую подставку' }
-        ]},
-        { id: 5, title: 'Дополнения', options: [
-          { id: 'addon-hydro', title: 'Гидромассажная система' },
-          { id: 'addon-led', title: 'Многоцветная LED-подсветка' },
-          { id: 'addon-audio', title: 'Встроенная аудиосистема' },
-          { id: 'addon-table', title: 'Складной сервировочный столик' }
-        ]}
-      ]
 
       let quizText = '\n\n📋 РЕЗУЛЬТАТЫ КВИЗА:\n'
       Object.entries(quizData).forEach(([stepId, answerIds]) => {

@@ -17,6 +17,9 @@ export default function ContactForm({ isOpen, onClose, quizData }: ContactFormPr
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState('')
+  
+  const SUCCESS_DISPLAY_DURATION = 2000
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
@@ -67,10 +70,13 @@ export default function ContactForm({ isOpen, onClose, quizData }: ContactFormPr
           setFormData({ name: '', phone: '', agreement: false })
           setErrors({})
           setIsSuccess(false)
-        }, 2000)
+        }, SUCCESS_DISPLAY_DURATION)
+      } else {
+        setError('Ошибка отправки. Попробуйте еще раз.')
       }
     } catch (error) {
       console.error('Ошибка отправки:', error)
+      setError('Ошибка сети. Проверьте подключение к интернету.')
     } finally {
       setIsSubmitting(false)
     }
@@ -174,6 +180,8 @@ export default function ContactForm({ isOpen, onClose, quizData }: ContactFormPr
               </label>
             </div>
             {errors.agreement && <p className="text-red-500 text-sm mt-1">{errors.agreement}</p>}
+            
+            {error && <div className="text-red-500 text-sm text-center p-2 bg-red-50 rounded">{error}</div>}
 
             <button
               type="submit"

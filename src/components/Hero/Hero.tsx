@@ -6,7 +6,6 @@ import Quiz from '../Quiz'
 
 export default function Hero() {
   const [isQuizOpen, setIsQuizOpen] = useState(false)
-  const [isQuizActive, setIsQuizActive] = useState(false)
 
   return (
     <>
@@ -139,7 +138,6 @@ export default function Hero() {
     <Quiz 
       isOpen={isQuizOpen} 
       onClose={() => setIsQuizOpen(false)}
-      onQuizStateChange={setIsQuizActive}
     />
     </>
   )
