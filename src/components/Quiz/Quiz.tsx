@@ -364,7 +364,7 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
       {/* Quiz Container */}
       <div className="relative h-full flex items-center justify-center p-2 sm:p-4" onClick={handleClose}>
         <div 
-          className="quiz-container bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-2xl lg:max-w-4xl xl:max-w-6xl h-full sm:h-[600px] lg:h-[700px] overflow-hidden animate-slide-in-bottom relative"
+          className="quiz-container bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-2xl lg:max-w-4xl xl:max-w-6xl h-[95vh] sm:h-[600px] lg:h-[700px] overflow-hidden animate-slide-in-bottom relative flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header with Close Button */}
@@ -402,12 +402,12 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
 
           {/* Content */}
           <div className="px-4 sm:px-6 pb-16 sm:pb-20 lg:pb-6 overflow-y-auto flex-1">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
               {/* Left Side - Main Image */}
-              <div className="order-2 lg:order-1 h-full flex flex-col">
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center lg:text-left">Соберите свой уникальный чан</h2>
+              <div className="order-2 lg:order-1 flex flex-col">
+                <h2 className="text-base sm:text-lg lg:text-xl font-bold text-gray-800 mb-2 sm:mb-3 text-center lg:text-left">Соберите свой уникальный чан</h2>
                 
-                <div className="w-full max-w-xs sm:max-w-sm mx-auto lg:mx-0 h-48 sm:h-64 lg:h-80 xl:h-96 rounded-lg sm:rounded-xl overflow-hidden bg-gray-100 mb-3 sm:mb-4">
+                <div className="w-full max-w-xs mx-auto lg:mx-0 h-32 sm:h-48 lg:h-64 rounded-lg overflow-hidden bg-gray-100 mb-2 sm:mb-3">
                   <img 
                     src={selectedMainImage} 
                     alt="Банный чан"
@@ -416,9 +416,9 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                 </div>
                 
                 {/* Selected Answers */}
-                <div className={`space-y-1 min-h-[60px] sm:min-h-[80px] lg:min-h-[120px] ${currentStep === 5 ? 'overflow-y-auto max-h-[80px] sm:max-h-[100px] lg:max-h-[120px]' : ''}`}>
+                <div className="space-y-1 text-xs text-gray-600">
                   {getFormattedAnswers().map((answer, index) => (
-                    <div key={index} className="text-xs text-gray-600 break-words leading-relaxed">
+                    <div key={index} className="break-words leading-tight">
                       <span className="font-bold text-gray-800">{answer.category}:</span> <span className="font-normal">{answer.value}</span>
                     </div>
                   ))}
@@ -426,17 +426,13 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
               </div>
               
               {/* Right Side - Options */}
-              <div className={`order-1 lg:order-2 space-y-4 sm:space-y-6 ${currentStep === 5 ? 'h-full flex flex-col' : ''}`}>
-                <h3 className="text-base sm:text-lg font-semibold text-gray-800 text-center lg:text-left">{currentStepData?.question}</h3>
+              <div className="order-1 lg:order-2 space-y-3 sm:space-y-4">
+                <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800 text-center lg:text-left">{currentStepData?.question}</h3>
                 
                 <div className={`${
                   currentStep === 1 
-                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-3 gap-3 sm:gap-4' 
-                    : currentStep === 2 || currentStep === 3 || currentStep === 4 
-                    ? 'grid grid-cols-1 gap-3 sm:gap-4' 
-                    : currentStep === 5 
-                    ? 'grid grid-cols-1 gap-3 sm:gap-4 overflow-y-auto flex-1 max-h-[300px] sm:max-h-[350px] lg:max-h-[400px]' 
-                    : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4'
+                    ? 'grid grid-cols-1 gap-2 sm:gap-3' 
+                    : 'grid grid-cols-1 gap-2 sm:gap-3'
                 }`}>
                   {currentStepData?.options.map((option) => {
                     const isSelected = answers[currentStep]?.includes(option.id) || false
@@ -445,7 +441,7 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                       <div
                         key={option.id}
                         onClick={() => handleOptionSelect(option.id)}
-                        className={`p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${
+                        className={`p-2 sm:p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${
                           currentStep === 1 
                             ? 'text-center' 
                             : 'flex items-center'
@@ -458,9 +454,9 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                         {option.image && (
                           <div className={`${
                             currentStep === 1 
-                              ? 'w-full h-16 sm:h-20 lg:h-24 mb-2 sm:mb-3' 
-                              : 'w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mr-3 sm:mr-4 flex-shrink-0'
-                          } rounded-md sm:rounded-lg overflow-hidden bg-gray-100`}>
+                              ? 'w-full h-12 sm:h-16 mb-2' 
+                              : 'w-12 h-12 sm:w-16 sm:h-16 mr-2 sm:mr-3 flex-shrink-0'
+                          } rounded-md overflow-hidden bg-gray-100`}>
                             <img 
                               src={option.image} 
                               alt={option.title}
@@ -469,11 +465,11 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                           </div>
                         )}
                         
-                        <div className={`${currentStep === 1 ? '' : 'flex-1'}`}>
-                          <h5 className="font-bold text-gray-800 text-xs sm:text-sm mb-1 sm:mb-2 leading-tight">{option.title}</h5>
+                        <div className={`${currentStep === 1 ? '' : 'flex-1 min-w-0'}`}>
+                          <h5 className="font-bold text-gray-800 text-xs sm:text-sm mb-1 leading-tight">{option.title}</h5>
                           
                           {option.description && (
-                            <div className="text-xs text-gray-500 mb-2 sm:mb-3 leading-relaxed">
+                            <div className="text-xs text-gray-500 leading-tight">
                               {option.description.split('\n').map((line, index) => (
                                 <div key={index}>{line}</div>
                               ))}
@@ -481,10 +477,10 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                           )}
                         </div>
                         
-                        <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 ${
+                        <div className={`w-4 h-4 rounded-full border-2 ${
                           currentStep === 1 
-                            ? 'mx-auto mt-2' 
-                            : 'ml-3 sm:ml-4 flex-shrink-0'
+                            ? 'mx-auto mt-1' 
+                            : 'ml-2 flex-shrink-0'
                         } transition-colors ${
                           isSelected ? 'border-orange-400 bg-orange-400' : 'border-gray-300'
                         }`}>
