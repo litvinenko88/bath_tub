@@ -1,6 +1,14 @@
+'use client'
+
+import { useState } from 'react'
+import Quiz from '../Quiz'
+
 export default function ProductCards() {
+  const [isQuizOpen, setIsQuizOpen] = useState(false)
+  const [selectedProductSize, setSelectedProductSize] = useState<string | undefined>(undefined)
   const products = [
     {
+      id: 'size-6',
       name: 'Банный чан "Алтай"',
       shape: '6 граней',
       capacity: '4 чел',
@@ -11,6 +19,7 @@ export default function ProductCards() {
       specImage: '/images/products/shan 1.1.jpg'
     },
     {
+      id: 'size-8',
       name: 'Банный чан "Сибирь"',
       shape: '8 граней',
       capacity: '6 чел',
@@ -21,6 +30,7 @@ export default function ProductCards() {
       specImage: '/images/products/shan 2.2.jpg'
     },
     {
+      id: 'size-10',
       name: 'Банный чан "Тайга"',
       shape: '10 граней',
       capacity: '10 чел',
@@ -31,6 +41,16 @@ export default function ProductCards() {
       specImage: '/images/products/shan 3.3.jpg'
     }
   ]
+
+  const handleProductClick = (productId: string) => {
+    setSelectedProductSize(productId)
+    setIsQuizOpen(true)
+  }
+
+  const handleQuizClose = () => {
+    setIsQuizOpen(false)
+    setSelectedProductSize(undefined)
+  }
 
   const PersonIcon = () => (
     <svg width="10" height="10" viewBox="0 0 512 512" className="fill-white">
@@ -45,6 +65,7 @@ export default function ProductCards() {
   )
 
   return (
+    <>
     <section className="py-16 sm:py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
@@ -60,8 +81,9 @@ export default function ProductCards() {
           {products.map((product, index) => (
             <div 
               key={index} 
-              className="group bg-white rounded-lg shadow-lg border border-gray-100 font-mono text-left overflow-hidden transition-all duration-500 hover:shadow-2xl animate-fade-in-up"
+              className="group bg-white rounded-lg shadow-lg border border-gray-100 font-mono text-left overflow-hidden transition-all duration-500 hover:shadow-2xl animate-fade-in-up cursor-pointer"
               style={{ animationDelay: `${index * 200}ms` }}
+              onClick={() => handleProductClick(product.id)}
             >
               {/* Основное изображение */}
               <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden rounded-t-lg">
@@ -118,7 +140,13 @@ export default function ProductCards() {
               {/* Кнопка с отступом */}
               <div className="max-h-0 group-hover:max-h-24 overflow-hidden transition-all duration-500 ease-out">
                 <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-4">
-                  <button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold py-3 sm:py-4 px-6 rounded-lg shadow-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                  <button 
+                    className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold py-3 sm:py-4 px-6 rounded-lg shadow-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleProductClick(product.id)
+                    }}
+                  >
                     <span className="text-sm sm:text-base">РАССЧИТАТЬ СТОИМОСТЬ</span>
                   </button>
                 </div>
@@ -128,5 +156,12 @@ export default function ProductCards() {
         </div>
       </div>
     </section>
+    
+    <Quiz 
+      isOpen={isQuizOpen} 
+      onClose={handleQuizClose}
+      preselectedSize={selectedProductSize}
+    />
+    </>
   )
 }

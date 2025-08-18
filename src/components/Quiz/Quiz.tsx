@@ -23,6 +23,7 @@ interface QuizProps {
   isOpen: boolean
   onClose: () => void
   onQuizStateChange?: (isOpen: boolean) => void
+  preselectedSize?: string
 }
 
 const quizSteps: QuizStep[] = [
@@ -156,7 +157,7 @@ const quizSteps: QuizStep[] = [
   }
 ]
 
-export default function Quiz({ isOpen, onClose, onQuizStateChange }: QuizProps) {
+export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSize }: QuizProps) {
   const [currentStep, setCurrentStep] = useState(1)
   const [answers, setAnswers] = useState<Record<number, string[]>>({})
   const [isVisible, setIsVisible] = useState(false)
@@ -169,6 +170,20 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange }: QuizProps) 
       document.body.style.overflow = 'hidden'
       setIsVisible(true)
       onQuizStateChange?.(true)
+      
+      // Устанавливаем предвыбранный размер если он передан
+      if (preselectedSize) {
+        setAnswers(prev => ({
+          ...prev,
+          1: [preselectedSize]
+        }))
+        
+        // Устанавливаем соответствующее изображение
+        const selectedOption = quizSteps[0].options.find(opt => opt.id === preselectedSize)
+        if (selectedOption?.mainImage) {
+          setSelectedMainImage(selectedOption.mainImage)
+        }
+      }
     } else {
       document.body.style.overflow = 'unset'
       setIsVisible(false)
@@ -178,7 +193,7 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange }: QuizProps) 
     return () => {
       document.body.style.overflow = 'unset'
     }
-  }, [isOpen, onQuizStateChange])
+  }, [isOpen, onQuizStateChange, preselectedSize])
 
   useEffect(() => {
     // Устанавливаем изображение по умолчанию для каждого шага
