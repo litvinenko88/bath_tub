@@ -1,7 +1,13 @@
+'use client'
+
+import { useState } from 'react'
 import Button from '../Button'
+import Quiz from '../Quiz'
 
 export default function Pricing() {
+  const [isQuizOpen, setIsQuizOpen] = useState(false)
   return (
+    <>
     <section className="relative min-h-[50vh] overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Фоновое изображение с оверлеем */}
       <div className="absolute inset-0">
@@ -46,7 +52,11 @@ export default function Pricing() {
             
             {/* Кнопка */}
             <div className="animate-fade-in-up animation-delay-600">
-              <Button variant="primary" className="transform hover:scale-105 transition-all duration-300">
+              <Button 
+                variant="primary" 
+                className="transform hover:scale-105 transition-all duration-300"
+                onClick={() => setIsQuizOpen(true)}
+              >
                 Рассчитать стоимость
               </Button>
             </div>
@@ -54,5 +64,11 @@ export default function Pricing() {
         </div>
       </div>
     </section>
+    
+    <Quiz 
+      isOpen={isQuizOpen} 
+      onClose={() => setIsQuizOpen(false)}
+    />
+    </>
   )
 }
