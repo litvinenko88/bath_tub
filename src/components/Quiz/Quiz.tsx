@@ -340,8 +340,16 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                 </div>
               </div>
               
-              {/* Next Button - Bottom Right */}
-              <div className="absolute bottom-6 right-6">
+              {/* Navigation Buttons - Bottom Right */}
+              <div className="absolute bottom-6 right-6 flex gap-3">
+                {currentStep > 1 && (
+                  <button
+                    onClick={handleBack}
+                    className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    ← Назад
+                  </button>
+                )}
                 {isStepCompleted() && (
                   <button
                     onClick={handleNext}
