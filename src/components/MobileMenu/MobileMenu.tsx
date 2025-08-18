@@ -2,16 +2,23 @@ interface MobileMenuProps {
   isMenuOpen: boolean
   menuItems: { name: string; href: string }[]
   onClose: () => void
+  onConsultationClick: () => void
 }
 
-export default function MobileMenu({ isMenuOpen, menuItems, onClose }: MobileMenuProps) {
+export default function MobileMenu({ isMenuOpen, menuItems, onClose, onConsultationClick }: MobileMenuProps) {
   return (
     <>
       {/* Мобильное меню */}
       <div className={`mobile-menu-modern ${isMenuOpen ? 'open' : ''}`}>
         <div className="mobile-menu-backdrop"></div>
         <nav className="mobile-nav">
-          <button className="consultation-btn-mobile">
+          <button 
+            className="consultation-btn-mobile"
+            onClick={() => {
+              onConsultationClick()
+              onClose()
+            }}
+          >
             Консультация
           </button>
           {menuItems.map((item, index) => {

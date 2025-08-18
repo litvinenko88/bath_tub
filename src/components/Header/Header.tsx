@@ -42,6 +42,7 @@ export default function Header() {
         isMenuOpen={isMenuOpen}
         menuItems={menuItems}
         onClose={() => setIsMenuOpen(false)}
+        onConsultationClick={() => setIsModalOpen(true)}
       />
       
       <ConsultationModal 
