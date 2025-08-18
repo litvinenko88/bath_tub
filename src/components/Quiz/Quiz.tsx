@@ -393,7 +393,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
               <div className={`space-y-6 ${currentStep === 5 ? 'h-full flex flex-col' : ''}`}>
                 <h3 className="text-lg font-semibold text-gray-800">{currentStepData?.question}</h3>
                 
-                <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 ? 'grid grid-cols-1 gap-4' : currentStep === 5 ? 'grid grid-cols-1 gap-4 overflow-y-auto flex-1' : 'grid grid-cols-3 gap-4'}`}>
+                <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 ? 'grid grid-cols-1 gap-4' : currentStep === 5 ? 'grid grid-cols-1 gap-4 overflow-y-auto flex-1 max-h-[400px]' : 'grid grid-cols-3 gap-4'}`}>
                   {currentStepData?.options.map((option) => {
                     const isSelected = answers[currentStep]?.includes(option.id) || false
                     
