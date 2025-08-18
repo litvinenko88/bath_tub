@@ -54,6 +54,25 @@ const quizSteps: QuizStep[] = [
   },
   {
     id: 2,
+    title: "Форма чана",
+    question: "Выберите форму",
+    options: [
+      {
+        id: "form-grannaya",
+        title: "Граненная",
+        image: "/images/products/quiz1.1.jpg",
+        mainImage: "/images/products/quiz1.jpg"
+      },
+      {
+        id: "form-brilliant",
+        title: "Бриллиантовая",
+        image: "/images/products/quiz1.2.jpg",
+        mainImage: "/images/products/quiz1.jpg"
+      }
+    ]
+  },
+  {
+    id: 3,
     title: "Тип нагрева",
     question: "Какой тип нагрева вам нужен?",
     options: [
@@ -75,7 +94,7 @@ const quizSteps: QuizStep[] = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     title: "Тип установки",
     question: "Какой тип установки вам нужен?",
     options: [
@@ -92,7 +111,7 @@ const quizSteps: QuizStep[] = [
     ]
   },
   {
-    id: 4,
+    id: 5,
     title: "Дополнения",
     question: "Какие дополнения вы бы хотели?",
     multiSelect: true,
