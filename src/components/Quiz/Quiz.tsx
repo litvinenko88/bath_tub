@@ -380,7 +380,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                 </div>
                 
                 {/* Selected Answers */}
-                <div className="space-y-1 min-h-[120px]">
+                <div className={`space-y-1 min-h-[120px] ${currentStep === 5 ? 'overflow-y-auto max-h-[120px]' : ''}`}>
                   {getFormattedAnswers().map((answer, index) => (
                     <div key={index} className="text-xs text-gray-600 break-words leading-relaxed">
                       <span className="font-bold text-gray-800">{answer.category}:</span> <span className="font-normal">{answer.value}</span>
@@ -390,10 +390,10 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
               </div>
               
               {/* Right Side - Options */}
-              <div className="space-y-6">
+              <div className={`space-y-6 ${currentStep === 5 ? 'h-full flex flex-col' : ''}`}>
                 <h3 className="text-lg font-semibold text-gray-800">{currentStepData?.question}</h3>
                 
-                <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'grid grid-cols-1 gap-4' : 'grid grid-cols-3 gap-4'}`}>
+                <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 ? 'grid grid-cols-1 gap-4' : currentStep === 5 ? 'grid grid-cols-1 gap-4 overflow-y-auto flex-1' : 'grid grid-cols-3 gap-4'}`}>
                   {currentStepData?.options.map((option) => {
                     const isSelected = answers[currentStep]?.includes(option.id) || false
                     
