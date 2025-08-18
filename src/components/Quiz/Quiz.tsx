@@ -78,18 +78,24 @@ const quizSteps: QuizStep[] = [
     options: [
       {
         id: "heating-wood",
-        title: "Подогрев от дровяной печи",
-        description: "Интегрирована с чаней – моментальный нагрев воды при минимальном потреблении дров"
+        title: "Электропечь",
+        description: "Интегрирована с чаней – моментальный нагрев воды при минимальном потреблении электричества",
+        image: "/images/quiz/quiz2.1.jpg",
+        mainImage: "/images/quiz/quiz2.jpg"
       },
       {
         id: "heating-fire",
         title: "Подогрев от костра", 
-        description: "Лаконичный дизайн, демократичная стоимость и завораживающая игра пламени во время процедур"
+        description: "Лаконичный дизайн, демократичная стоимость и завораживающая игра пламени во время процедур",
+        image: "/images/quiz/quiz2.2.jpg",
+        mainImage: "/images/quiz/quiz2.jpg"
       },
       {
         id: "heating-gas",
         title: "Газовая печь",
-        description: "Газовая система нагрева – мгновенный результат, практически отсутствует дым и не образуется зола"
+        description: "Газовая система нагрева – мгновенный результат, практически отсутствует дым и не образуется зола",
+        image: "/images/quiz/quiz2.3.jpg",
+        mainImage: "/images/quiz/quiz2.jpg"
       }
     ]
   },
@@ -169,6 +175,9 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
         break
       case 2:
         setSelectedMainImage("/images/quiz/quiz1.png")
+        break
+      case 3:
+        setSelectedMainImage("/images/quiz/quiz2.jpg")
         break
       default:
         // Для остальных вопросов оставляем текущее изображение
@@ -372,7 +381,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
               <div className="space-y-6">
                 <h3 className="text-lg font-semibold text-gray-800">{currentStepData?.question}</h3>
                 
-                <div className={`${currentStep === 2 ? 'grid grid-cols-1 gap-4' : 'grid grid-cols-3 gap-4'}`}>
+                <div className={`${currentStep === 2 || currentStep === 3 ? 'grid grid-cols-1 gap-4' : 'grid grid-cols-3 gap-4'}`}>
                   {currentStepData?.options.map((option) => {
                     const isSelected = answers[currentStep]?.includes(option.id) || false
                     
@@ -380,14 +389,14 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                       <div
                         key={option.id}
                         onClick={() => handleOptionSelect(option.id)}
-                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${currentStep === 2 ? 'flex items-center' : 'text-center'} ${
+                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${currentStep === 2 || currentStep === 3 ? 'flex items-center' : 'text-center'} ${
                           isSelected 
                             ? 'border-orange-400 bg-orange-50 shadow-lg' 
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
                         {option.image && (
-                          <div className={`${currentStep === 2 ? 'w-24 h-24 mr-4 flex-shrink-0' : 'w-full h-24 mb-3'} rounded-lg overflow-hidden bg-gray-100`}>
+                          <div className={`${currentStep === 2 || currentStep === 3 ? 'w-24 h-24 mr-4 flex-shrink-0' : 'w-full h-24 mb-3'} rounded-lg overflow-hidden bg-gray-100`}>
                             <img 
                               src={option.image} 
                               alt={option.title}
@@ -396,7 +405,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                           </div>
                         )}
                         
-                        <div className={`${currentStep === 2 ? 'flex-1' : ''}`}>
+                        <div className={`${currentStep === 2 || currentStep === 3 ? 'flex-1' : ''}`}>
                           <h5 className="font-bold text-gray-800 text-sm mb-2 leading-tight">{option.title}</h5>
                           
                           {option.description && (
@@ -408,7 +417,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                           )}
                         </div>
                         
-                        <div className={`w-5 h-5 rounded-full border-2 ${currentStep === 2 ? 'ml-4 flex-shrink-0' : 'mx-auto'} transition-colors ${
+                        <div className={`w-5 h-5 rounded-full border-2 ${currentStep === 2 || currentStep === 3 ? 'ml-4 flex-shrink-0' : 'mx-auto'} transition-colors ${
                           isSelected ? 'border-orange-400 bg-orange-400' : 'border-gray-300'
                         }`}>
                           {isSelected && (
