@@ -182,16 +182,10 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
         setSelectedMainImage("/images/products/shan 1.jpg")
         break
       case 2:
-        setSelectedMainImage("/images/quiz/quiz1.png")
-        break
       case 3:
-        setSelectedMainImage("/images/quiz/quiz2.jpg")
-        break
       case 4:
-        setSelectedMainImage("/images/quiz/quiz3.jpg")
-        break
       case 5:
-        setSelectedMainImage("/images/quiz/quiz4.jpg")
+        setSelectedMainImage("/images/quiz/quiz1.png")
         break
       default:
         // Для остальных вопросов оставляем текущее изображение
