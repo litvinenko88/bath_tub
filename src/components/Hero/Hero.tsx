@@ -91,9 +91,9 @@ export default function Hero() {
                     element.scrollIntoView({ behavior: 'smooth' })
                   }
                 }}
-                className="inline-block"
+                className="inline-block w-full sm:w-auto"
               >
-                <Button variant="primary" className="transform hover:scale-105 transition-all duration-300">
+                <Button variant="primary" className="transform hover:scale-105 transition-all duration-300 w-full sm:w-auto">
                   Посмотреть каталог
                 </Button>
               </a>
