@@ -7,7 +7,11 @@ interface OperatorChatRef {
   openChat: () => void
 }
 
-const OperatorChat = forwardRef<OperatorChatRef>((props, ref) => {
+interface OperatorChatProps {
+  isQuizActive?: boolean
+}
+
+const OperatorChat = forwardRef<OperatorChatRef, OperatorChatProps>(({ isQuizActive = false }, ref) => {
   const [showNotification, setShowNotification] = useState(false)
   const [showChat, setShowChat] = useState(false)
 
@@ -44,7 +48,7 @@ const OperatorChat = forwardRef<OperatorChatRef>((props, ref) => {
   return (
     <>
       {/* Уведомление */}
-      {showNotification && (
+      {showNotification && !isQuizActive && (
         <div className="fixed bottom-20 right-3 sm:right-6 z-40 animate-fade-in max-w-[calc(100vw-24px)] sm:max-w-none">
           <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl border border-gray-100 p-5 w-80 max-w-full backdrop-blur-sm">
             {/* Хвостик уведомления */}

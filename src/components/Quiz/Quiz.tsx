@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import ContactForm from '../ContactForm'
 
 interface QuizOption {
   id: string
@@ -21,6 +22,7 @@ interface QuizStep {
 interface QuizProps {
   isOpen: boolean
   onClose: () => void
+  onQuizStateChange?: (isOpen: boolean) => void
 }
 
 const quizSteps: QuizStep[] = [
@@ -154,26 +156,29 @@ const quizSteps: QuizStep[] = [
   }
 ]
 
-export default function Quiz({ isOpen, onClose }: QuizProps) {
+export default function Quiz({ isOpen, onClose, onQuizStateChange }: QuizProps) {
   const [currentStep, setCurrentStep] = useState(1)
   const [answers, setAnswers] = useState<Record<number, string[]>>({})
   const [isVisible, setIsVisible] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
   const [selectedMainImage, setSelectedMainImage] = useState("/images/products/shan 1.jpg")
+  const [showContactForm, setShowContactForm] = useState(false)
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
       setIsVisible(true)
+      onQuizStateChange?.(true)
     } else {
       document.body.style.overflow = 'unset'
       setIsVisible(false)
+      onQuizStateChange?.(false)
     }
 
     return () => {
       document.body.style.overflow = 'unset'
     }
-  }, [isOpen])
+  }, [isOpen, onQuizStateChange])
 
   useEffect(() => {
     // Устанавливаем изображение по умолчанию для каждого шага
@@ -233,7 +238,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1)
     } else {
-      setIsCompleted(true)
+      setShowContactForm(true)
     }
   }
 
@@ -259,6 +264,12 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
     setCurrentStep(1)
     setAnswers({})
     setSelectedMainImage("/images/products/shan 1.jpg")
+    setShowContactForm(false)
+  }
+
+  const handleContactFormClose = () => {
+    setShowContactForm(false)
+    handleClose()
   }
 
   const getFormattedAnswers = () => {
@@ -292,7 +303,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
     return formattedAnswers
   }
 
-  if (!isOpen) return null
+  if (!isOpen && !showContactForm) return null
 
   if (isCompleted) {
     return (
@@ -327,6 +338,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
   }
 
   return (
+    <>
     <div className={`fixed inset-0 z-50 transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       {/* Backdrop */}
       <div 
@@ -475,5 +487,12 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
         </div>
       </div>
     </div>
+    
+    <ContactForm 
+      isOpen={showContactForm} 
+      onClose={handleContactFormClose}
+      quizData={answers}
+    />
+    </>
   )
 }
