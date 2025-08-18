@@ -400,7 +400,7 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
           </div>
 
           {/* Content */}
-          <div className="px-4 sm:px-6 pb-16 sm:pb-20 lg:pb-6 overflow-y-auto flex-1">
+          <div className="px-4 sm:px-6 pb-24 sm:pb-20 lg:pb-6 overflow-y-auto flex-1">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
               {/* Left Side - Main Image */}
               <div className="order-2 lg:order-1 flex flex-col">
@@ -435,7 +435,11 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                     return (
                       <div
                         key={option.id}
-                        onClick={() => handleOptionSelect(option.id)}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          handleOptionSelect(option.id)
+                        }}
                         className={`p-2 sm:p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:shadow-md flex items-center ${
                           isSelected 
                             ? 'border-orange-400 bg-orange-50 shadow-lg' 
@@ -480,24 +484,32 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
           </div>
           
           {/* Navigation Buttons - Fixed Bottom */}
-          <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 sm:p-4 lg:p-6">
-            <div className="flex gap-2 sm:gap-3 justify-end max-w-6xl mx-auto">
+          <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 sm:p-4 lg:p-6" style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}>
+            <div className="flex gap-3 sm:gap-3 justify-between sm:justify-end max-w-6xl mx-auto">
               {currentStep > 1 && (
                 <button
-                  onClick={handleBack}
-                  className="bg-gray-500 hover:bg-gray-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors text-sm sm:text-base"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleBack()
+                  }}
+                  className="bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white px-6 sm:px-6 py-4 sm:py-3 rounded-lg font-medium transition-colors text-base sm:text-base min-h-[48px] flex-1 sm:flex-none touch-manipulation"
                 >
                   <span className="hidden sm:inline">← Назад</span>
-                  <span className="sm:hidden">←</span>
+                  <span className="sm:hidden">← Назад</span>
                 </button>
               )}
               {isStepCompleted() && (
                 <button
-                  onClick={handleNext}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors text-sm sm:text-base"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleNext()
+                  }}
+                  className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white px-6 sm:px-6 py-4 sm:py-3 rounded-lg font-medium transition-colors text-base sm:text-base min-h-[48px] flex-1 sm:flex-none touch-manipulation"
                 >
                   <span className="hidden sm:inline">{currentStep === totalSteps ? 'Получить расчет' : 'Далее →'}</span>
-                  <span className="sm:hidden">{currentStep === totalSteps ? 'Расчет' : '→'}</span>
+                  <span className="sm:hidden">{currentStep === totalSteps ? 'Получить расчет' : 'Далее →'}</span>
                 </button>
               )}
             </div>

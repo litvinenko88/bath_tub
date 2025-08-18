@@ -32,7 +32,7 @@ export default function RootLayout({
     <html lang="ru">
       <head>
         <meta name="google-site-verification" content="HE6MqMZdcZ7IIv2Yv9n3ZxGSZZpu8ms2LJlcbG85jGE" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
         <meta name="theme-color" content="#f97316" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Nova Bathtub" />
