@@ -1,16 +1,9 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
-import OperatorChat from '@/components/OperatorChat'
+import { useState, useEffect } from 'react'
 
 const ContactBar = () => {
   const [showAllButtons, setShowAllButtons] = useState(false)
-  const chatRef = useRef<{ openChat: () => void }>(null)
-
-  const handleOperatorClick = () => {
-    chatRef.current?.openChat()
-  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,24 +20,7 @@ const ContactBar = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center space-y-3">
-      {/* Оператор - всегда видим */}
-      <button 
-        onClick={handleOperatorClick}
-        className="group relative w-12 h-12 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
-      >
-        <Image 
-          src="/images/operator.png" 
-          alt="Оператор" 
-          width={48} 
-          height={48}
-          className="rounded-full object-cover shadow-lg"
-        />
-        <div className="absolute -left-32 top-1/2 transform -translate-y-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-          Онлайн консультант
-        </div>
-      </button>
-
-      {/* Остальные кнопки - появляются при скролле */}
+      {/* Кнопки контактов */}
       <div className={`flex flex-col items-center space-y-3 transition-all duration-500 ${
         showAllButtons ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
       }`}>
@@ -91,9 +67,6 @@ const ContactBar = () => {
           </div>
         </a>
       </div>
-      
-      {/* Компонент чата */}
-      <OperatorChat ref={chatRef} />
     </div>
   )
 }
