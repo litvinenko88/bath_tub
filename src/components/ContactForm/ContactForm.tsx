@@ -5,7 +5,7 @@ import { useState } from 'react'
 interface ContactFormProps {
   isOpen: boolean
   onClose: () => void
-  quizData: any
+  quizData: Record<number, string[]>
 }
 
 export default function ContactForm({ isOpen, onClose, quizData }: ContactFormProps) {
@@ -46,54 +46,6 @@ export default function ContactForm({ isOpen, onClose, quizData }: ContactFormPr
 
     setIsSubmitting(true)
 
-    // Форматируем данные квиза для отправки
-    const formatQuizData = () => {
-      const quizSteps = [
-        { id: 1, title: 'Размер чана', options: [
-          { id: 'size-6', title: 'Банный чан "Алтай"', description: '6 граней, Вместимость 4 чел, Диаметр Ø 1700мм' },
-          { id: 'size-8', title: 'Банный чан "Сибирь"', description: '8 граней, Вместимость 6 чел, Диаметр Ø 1900мм' },
-          { id: 'size-10', title: 'Банный чан "Тайга"', description: '10 граней, Вместимость 10 чел, Диаметр Ø 2300мм' }
-        ]},
-        { id: 2, title: 'Форма чана', options: [
-          { id: 'form-grannaya', title: 'Граненная' },
-          { id: 'form-brilliant', title: 'Бриллиантовая' }
-        ]},
-        { id: 3, title: 'Тип нагрева', options: [
-          { id: 'heating-wood', title: 'Электропечь' },
-          { id: 'heating-fire', title: 'Подогрев от костра' },
-          { id: 'heating-gas', title: 'Газовая печь' }
-        ]},
-        { id: 4, title: 'Тип установки', options: [
-          { id: 'install-wood', title: 'Монтаж чана на деревянные срубы' },
-          { id: 'install-metal', title: 'Установка на металлическую подставку' }
-        ]},
-        { id: 5, title: 'Дополнения', options: [
-          { id: 'addon-hydro', title: 'Гидромассажная система' },
-          { id: 'addon-led', title: 'Многоцветная LED-подсветка' },
-          { id: 'addon-audio', title: 'Встроенная аудиосистема' },
-          { id: 'addon-table', title: 'Складной сервировочный столик' }
-        ]}
-      ]
-
-      let quizText = '\n\n📋 РЕЗУЛЬТАТЫ КВИЗА:\n'
-      Object.entries(quizData).forEach(([stepId, answerIds]) => {
-        const step = quizSteps.find(s => s.id === parseInt(stepId))
-        if (step && Array.isArray(answerIds)) {
-          quizText += `\n❓ ${step.title}:\n`
-          answerIds.forEach(answerId => {
-            const option = step.options.find(opt => opt.id === answerId)
-            if (option) {
-              quizText += `✅ ${option.title}\n`
-              if (option.description) {
-                quizText += `   ${option.description}\n`
-              }
-            }
-          })
-        }
-      })
-      return quizText
-    }
-
     try {
       const response = await fetch('/api/send-message', {
         method: 'POST',
@@ -104,7 +56,7 @@ export default function ContactForm({ isOpen, onClose, quizData }: ContactFormPr
           name: formData.name,
           phone: formData.phone,
           source: 'Квиз - Расчет стоимости',
-          message: `🔥 Новая заявка с квиза "Расчет стоимости"\n\n👤 Имя: ${formData.name}\n📞 Телефон: ${formData.phone}\n📍 Источник: Квиз - Расчет стоимости${formatQuizData()}\n\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`
+          quizData: quizData
         }),
       })
 
