@@ -162,8 +162,17 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
   }, [isOpen])
 
   useEffect(() => {
-    if (currentStep === 1) {
-      setSelectedMainImage("/images/products/shan 1.jpg")
+    // Устанавливаем изображение по умолчанию для каждого шага
+    switch (currentStep) {
+      case 1:
+        setSelectedMainImage("/images/products/shan 1.jpg")
+        break
+      case 2:
+        setSelectedMainImage("/images/quiz/quiz1.webp")
+        break
+      default:
+        // Для остальных вопросов оставляем текущее изображение
+        break
     }
   }, [currentStep])
 
@@ -341,7 +350,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
               <div className="h-full flex flex-col">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Соберите свой уникальный чан</h2>
                 
-                <div className="flex-1 rounded-xl overflow-hidden bg-gray-100 mb-4">
+                <div className="w-full max-w-sm h-96 rounded-xl overflow-hidden bg-gray-100 mb-4">
                   <img 
                     src={selectedMainImage} 
                     alt="Банный чан"
