@@ -383,7 +383,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                             <img 
                               src={option.image} 
                               alt={option.title}
-                              className="w-full h-full object-contain"
+                              className="w-full h-full object-cover"
                             />
                           </div>
                         )}
