@@ -250,10 +250,15 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
 
   const handleComplete = () => {
     console.log('Quiz completed:', answers)
+    handleClose()
+  }
+
+  const handleClose = () => {
     onClose()
     setIsCompleted(false)
     setCurrentStep(1)
     setAnswers({})
+    setSelectedMainImage("/images/products/shan 1.jpg")
   }
 
   const getFormattedAnswers = () => {
@@ -292,7 +297,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
   if (isCompleted) {
     return (
       <div className={`fixed inset-0 z-50 transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={handleClose} />
         <div className="relative h-full flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-slide-in-bottom">
             <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 text-center">
@@ -326,11 +331,11 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-        onClick={onClose}
+        onClick={handleClose}
       />
       
       {/* Quiz Container */}
-      <div className="relative h-full flex items-center justify-center p-4">
+      <div className="relative h-full flex items-center justify-center p-4" onClick={handleClose}>
         <div 
           className="quiz-container bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[700px] overflow-hidden animate-slide-in-bottom relative"
           onClick={(e) => e.stopPropagation()}
@@ -338,7 +343,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
           {/* Header with Close Button */}
           <div className="relative p-6 pb-4">
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
             >
               <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
