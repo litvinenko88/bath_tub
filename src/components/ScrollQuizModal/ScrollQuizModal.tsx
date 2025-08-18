@@ -41,7 +41,7 @@ export default function ScrollQuizModal({ targetElementId = 'gallery' }: ScrollQ
     <div className="fixed inset-0 z-50">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
       <div className="relative h-full flex flex-col">
-        <div className="bg-white p-6 text-center border-b">
+        <div className="bg-white p-6 text-center border-b relative">
           <button
             onClick={handleClose}
             className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
@@ -50,7 +50,7 @@ export default function ScrollQuizModal({ targetElementId = 'gallery' }: ScrollQ
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <h2 className="text-2xl font-bold text-gray-800">
+          <h2 className="text-2xl font-bold text-gray-800 pr-12">
             Не нашли нужный чан на сайте? Давайте соберем его вместе
           </h2>
         </div>
