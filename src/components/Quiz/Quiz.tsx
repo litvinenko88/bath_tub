@@ -429,11 +429,7 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
               <div className="order-1 lg:order-2 space-y-3 sm:space-y-4">
                 <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800 text-center lg:text-left">{currentStepData?.question}</h3>
                 
-                <div className={`${
-                  currentStep === 1 
-                    ? 'grid grid-cols-1 gap-2 sm:gap-3' 
-                    : 'grid grid-cols-1 gap-2 sm:gap-3'
-                }`}>
+                <div className="grid grid-cols-1 gap-2 sm:gap-3">
                   {currentStepData?.options.map((option) => {
                     const isSelected = answers[currentStep]?.includes(option.id) || false
                     
@@ -441,22 +437,14 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                       <div
                         key={option.id}
                         onClick={() => handleOptionSelect(option.id)}
-                        className={`p-2 sm:p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${
-                          currentStep === 1 
-                            ? 'text-center' 
-                            : 'flex items-center'
-                        } ${
+                        className={`p-2 sm:p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:shadow-md flex items-center ${
                           isSelected 
                             ? 'border-orange-400 bg-orange-50 shadow-lg' 
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
                         {option.image && (
-                          <div className={`${
-                            currentStep === 1 
-                              ? 'w-full h-12 sm:h-16 mb-2' 
-                              : 'w-12 h-12 sm:w-16 sm:h-16 mr-2 sm:mr-3 flex-shrink-0'
-                          } rounded-md overflow-hidden bg-gray-100`}>
+                          <div className="w-12 h-12 sm:w-16 sm:h-16 mr-2 sm:mr-3 flex-shrink-0 rounded-md overflow-hidden bg-gray-100">
                             <img 
                               src={option.image} 
                               alt={option.title}
@@ -465,7 +453,7 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                           </div>
                         )}
                         
-                        <div className={`${currentStep === 1 ? '' : 'flex-1 min-w-0'}`}>
+                        <div className="flex-1 min-w-0">
                           <h5 className="font-bold text-gray-800 text-xs sm:text-sm mb-1 leading-tight">{option.title}</h5>
                           
                           {option.description && (
@@ -477,11 +465,7 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                           )}
                         </div>
                         
-                        <div className={`w-4 h-4 rounded-full border-2 ${
-                          currentStep === 1 
-                            ? 'mx-auto mt-1' 
-                            : 'ml-2 flex-shrink-0'
-                        } transition-colors ${
+                        <div className={`w-4 h-4 rounded-full border-2 ml-2 flex-shrink-0 transition-colors ${
                           isSelected ? 'border-orange-400 bg-orange-400' : 'border-gray-300'
                         }`}>
                           {isSelected && (
