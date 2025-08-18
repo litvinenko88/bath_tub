@@ -200,8 +200,12 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
     if (!stepData) return
 
     const selectedOption = stepData.options.find(opt => opt.id === optionId)
-    if (selectedOption?.mainImage) {
+    if (currentStep === 1 && selectedOption?.mainImage) {
+      // Для первого вопроса используем mainImage
       setSelectedMainImage(selectedOption.mainImage)
+    } else if ((currentStep === 2 || currentStep === 3 || currentStep === 4) && selectedOption?.image) {
+      // Для вопросов 2, 3, 4 показываем изображение из карточки
+      setSelectedMainImage(selectedOption.image)
     }
 
     if (stepData.multiSelect) {
