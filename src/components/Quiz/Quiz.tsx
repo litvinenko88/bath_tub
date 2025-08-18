@@ -346,14 +346,18 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
               </svg>
             </button>
             
-            {/* Progress Dots */}
-            <div className="flex justify-center mb-4 mt-2">
+            {/* Progress Lines */}
+            <div className="flex justify-center mb-4 mt-2 w-full max-w-md mx-auto">
               {Array.from({ length: totalSteps }, (_, i) => (
                 <div
                   key={i}
-                  className={`w-3 h-3 rounded-full mx-1 transition-colors ${
+                  className={`flex-1 h-1 mx-1 transition-colors ${
                     i + 1 <= currentStep ? 'bg-orange-400' : 'bg-gray-300'
                   }`}
+                  style={{
+                    backgroundImage: i + 1 > currentStep ? 'repeating-linear-gradient(to right, #d1d5db 0, #d1d5db 8px, transparent 8px, transparent 16px)' : undefined,
+                    backgroundColor: i + 1 <= currentStep ? '#fb923c' : 'transparent'
+                  }}
                 />
               ))}
             </div>
