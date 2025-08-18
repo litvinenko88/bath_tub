@@ -325,23 +325,23 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
       <div className={`fixed inset-0 z-50 transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={handleClose} />
         <div className="relative h-full flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-slide-in-bottom">
-            <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md overflow-hidden animate-slide-in-bottom">
+            <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-4 sm:p-6 text-center">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold mb-2">Спасибо!</h2>
-              <p className="text-green-100">Ваш расчет готов</p>
+              <h2 className="text-xl sm:text-2xl font-bold mb-2">Спасибо!</h2>
+              <p className="text-green-100 text-sm sm:text-base">Ваш расчет готов</p>
             </div>
-            <div className="p-6 text-center">
-              <p className="text-gray-600 mb-6">
+            <div className="p-4 sm:p-6 text-center">
+              <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed">
                 Наш менеджер свяжется с вами в течение 15 минут для уточнения деталей и предоставления точного расчета стоимости.
               </p>
               <button
                 onClick={handleComplete}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition-colors text-sm sm:text-base"
               >
                 Закрыть
               </button>
@@ -362,28 +362,28 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
       />
       
       {/* Quiz Container */}
-      <div className="relative h-full flex items-center justify-center p-4" onClick={handleClose}>
+      <div className="relative h-full flex items-center justify-center p-2 sm:p-4" onClick={handleClose}>
         <div 
-          className="quiz-container bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[700px] overflow-hidden animate-slide-in-bottom relative"
+          className="quiz-container bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-2xl lg:max-w-4xl xl:max-w-6xl h-full sm:h-[600px] lg:h-[700px] overflow-hidden animate-slide-in-bottom relative"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header with Close Button */}
-          <div className="relative p-6 pb-4">
+          <div className="relative p-4 sm:p-6 pb-2 sm:pb-4">
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors z-10"
             >
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
             
             {/* Progress Lines */}
-            <div className="flex justify-center mb-4 mt-2 w-full max-w-md mx-auto">
+            <div className="flex justify-center mb-3 sm:mb-4 mt-2 w-full max-w-xs sm:max-w-md mx-auto">
               {Array.from({ length: totalSteps }, (_, i) => (
                 <div
                   key={i}
-                  className={`flex-1 h-1 mx-1 transition-colors ${
+                  className={`flex-1 h-1 mx-0.5 sm:mx-1 transition-colors ${
                     i + 1 <= currentStep ? 'bg-orange-400' : 'bg-gray-300'
                   }`}
                   style={{
@@ -395,19 +395,19 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
             </div>
             
             {/* Question Counter */}
-            <div className="text-sm text-gray-600 mb-2">
+            <div className="text-xs sm:text-sm text-gray-600 mb-2 text-center">
               Вопрос {currentStep} из {totalSteps}
             </div>
           </div>
 
           {/* Content */}
-          <div className="px-6 pb-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="px-4 sm:px-6 pb-16 sm:pb-20 lg:pb-6 overflow-y-auto flex-1">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 h-full">
               {/* Left Side - Main Image */}
-              <div className="h-full flex flex-col">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Соберите свой уникальный чан</h2>
+              <div className="order-2 lg:order-1 h-full flex flex-col">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center lg:text-left">Соберите свой уникальный чан</h2>
                 
-                <div className="w-full max-w-sm h-96 rounded-xl overflow-hidden bg-gray-100 mb-4">
+                <div className="w-full max-w-xs sm:max-w-sm mx-auto lg:mx-0 h-48 sm:h-64 lg:h-80 xl:h-96 rounded-lg sm:rounded-xl overflow-hidden bg-gray-100 mb-3 sm:mb-4">
                   <img 
                     src={selectedMainImage} 
                     alt="Банный чан"
@@ -416,7 +416,7 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                 </div>
                 
                 {/* Selected Answers */}
-                <div className={`space-y-1 min-h-[120px] ${currentStep === 5 ? 'overflow-y-auto max-h-[120px]' : ''}`}>
+                <div className={`space-y-1 min-h-[60px] sm:min-h-[80px] lg:min-h-[120px] ${currentStep === 5 ? 'overflow-y-auto max-h-[80px] sm:max-h-[100px] lg:max-h-[120px]' : ''}`}>
                   {getFormattedAnswers().map((answer, index) => (
                     <div key={index} className="text-xs text-gray-600 break-words leading-relaxed">
                       <span className="font-bold text-gray-800">{answer.category}:</span> <span className="font-normal">{answer.value}</span>
@@ -426,10 +426,18 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
               </div>
               
               {/* Right Side - Options */}
-              <div className={`space-y-6 ${currentStep === 5 ? 'h-full flex flex-col' : ''}`}>
-                <h3 className="text-lg font-semibold text-gray-800">{currentStepData?.question}</h3>
+              <div className={`order-1 lg:order-2 space-y-4 sm:space-y-6 ${currentStep === 5 ? 'h-full flex flex-col' : ''}`}>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-800 text-center lg:text-left">{currentStepData?.question}</h3>
                 
-                <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 ? 'grid grid-cols-1 gap-4' : currentStep === 5 ? 'grid grid-cols-1 gap-4 overflow-y-auto flex-1 max-h-[400px]' : 'grid grid-cols-3 gap-4'}`}>
+                <div className={`${
+                  currentStep === 1 
+                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-3 gap-3 sm:gap-4' 
+                    : currentStep === 2 || currentStep === 3 || currentStep === 4 
+                    ? 'grid grid-cols-1 gap-3 sm:gap-4' 
+                    : currentStep === 5 
+                    ? 'grid grid-cols-1 gap-3 sm:gap-4 overflow-y-auto flex-1 max-h-[300px] sm:max-h-[350px] lg:max-h-[400px]' 
+                    : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4'
+                }`}>
                   {currentStepData?.options.map((option) => {
                     const isSelected = answers[currentStep]?.includes(option.id) || false
                     
@@ -437,14 +445,22 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                       <div
                         key={option.id}
                         onClick={() => handleOptionSelect(option.id)}
-                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'flex items-center' : 'text-center'} ${
+                        className={`p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${
+                          currentStep === 1 
+                            ? 'text-center' 
+                            : 'flex items-center'
+                        } ${
                           isSelected 
                             ? 'border-orange-400 bg-orange-50 shadow-lg' 
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
                         {option.image && (
-                          <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'w-24 h-24 mr-4 flex-shrink-0' : 'w-full h-24 mb-3'} rounded-lg overflow-hidden bg-gray-100`}>
+                          <div className={`${
+                            currentStep === 1 
+                              ? 'w-full h-16 sm:h-20 lg:h-24 mb-2 sm:mb-3' 
+                              : 'w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mr-3 sm:mr-4 flex-shrink-0'
+                          } rounded-md sm:rounded-lg overflow-hidden bg-gray-100`}>
                             <img 
                               src={option.image} 
                               alt={option.title}
@@ -453,11 +469,11 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                           </div>
                         )}
                         
-                        <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'flex-1' : ''}`}>
-                          <h5 className="font-bold text-gray-800 text-sm mb-2 leading-tight">{option.title}</h5>
+                        <div className={`${currentStep === 1 ? '' : 'flex-1'}`}>
+                          <h5 className="font-bold text-gray-800 text-xs sm:text-sm mb-1 sm:mb-2 leading-tight">{option.title}</h5>
                           
                           {option.description && (
-                            <div className="text-xs text-gray-500 mb-3 leading-relaxed">
+                            <div className="text-xs text-gray-500 mb-2 sm:mb-3 leading-relaxed">
                               {option.description.split('\n').map((line, index) => (
                                 <div key={index}>{line}</div>
                               ))}
@@ -465,7 +481,11 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
                           )}
                         </div>
                         
-                        <div className={`w-5 h-5 rounded-full border-2 ${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'ml-4 flex-shrink-0' : 'mx-auto'} transition-colors ${
+                        <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 ${
+                          currentStep === 1 
+                            ? 'mx-auto mt-2' 
+                            : 'ml-3 sm:ml-4 flex-shrink-0'
+                        } transition-colors ${
                           isSelected ? 'border-orange-400 bg-orange-400' : 'border-gray-300'
                         }`}>
                           {isSelected && (
@@ -480,24 +500,28 @@ export default function Quiz({ isOpen, onClose, onQuizStateChange, preselectedSi
             </div>
           </div>
           
-          {/* Navigation Buttons - Bottom Right */}
-          <div className="absolute bottom-6 right-6 flex gap-3">
-            {currentStep > 1 && (
-              <button
-                onClick={handleBack}
-                className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
-              >
-                ← Назад
-              </button>
-            )}
-            {isStepCompleted() && (
-              <button
-                onClick={handleNext}
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
-              >
-                {currentStep === totalSteps ? 'Получить расчет' : 'Далее →'}
-              </button>
-            )}
+          {/* Navigation Buttons - Fixed Bottom */}
+          <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 sm:p-4 lg:p-6">
+            <div className="flex gap-2 sm:gap-3 justify-end max-w-6xl mx-auto">
+              {currentStep > 1 && (
+                <button
+                  onClick={handleBack}
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors text-sm sm:text-base"
+                >
+                  <span className="hidden sm:inline">← Назад</span>
+                  <span className="sm:hidden">←</span>
+                </button>
+              )}
+              {isStepCompleted() && (
+                <button
+                  onClick={handleNext}
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors text-sm sm:text-base"
+                >
+                  <span className="hidden sm:inline">{currentStep === totalSteps ? 'Получить расчет' : 'Далее →'}</span>
+                  <span className="sm:hidden">{currentStep === totalSteps ? 'Расчет' : '→'}</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
