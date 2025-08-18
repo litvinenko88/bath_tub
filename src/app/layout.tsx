@@ -19,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <head>
+        <meta name="google-site-verification" content="HE6MqMZdcZ7IIv2Yv9n3ZxGSZZpu8ms2LJlcbG85jGE" />
         <link
           href="https://fonts.googleapis.com/css2?family=TT+Prosto+Sans:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
