@@ -60,14 +60,14 @@ const quizSteps: QuizStep[] = [
       {
         id: "form-grannaya",
         title: "Граненная",
-        image: "/images/products/quiz1.1.jpg",
-        mainImage: "/images/products/quiz1.jpg"
+        image: "/images/quiz/quiz1.1.webp",
+        mainImage: "/images/quiz/quiz1.webp"
       },
       {
         id: "form-brilliant",
         title: "Бриллиантовая",
-        image: "/images/products/quiz1.2.jpg",
-        mainImage: "/images/products/quiz1.jpg"
+        image: "/images/quiz/quiz1.2.jpg",
+        mainImage: "/images/quiz/quiz1.webp"
       }
     ]
   },
@@ -359,26 +359,6 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                 </div>
               </div>
               
-              {/* Navigation Buttons - Bottom Right */}
-              <div className="absolute bottom-6 right-6 flex gap-3">
-                {currentStep > 1 && (
-                  <button
-                    onClick={handleBack}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
-                  >
-                    ← Назад
-                  </button>
-                )}
-                {isStepCompleted() && (
-                  <button
-                    onClick={handleNext}
-                    className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
-                  >
-                    {currentStep === totalSteps ? 'Получить расчет' : 'Далее →'}
-                  </button>
-                )}
-              </div>
-              
               {/* Right Side - Options */}
               <div className="space-y-6">
                 <h3 className="text-lg font-semibold text-gray-800">{currentStepData?.question}</h3>
@@ -430,6 +410,26 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                 </div>
               </div>
             </div>
+          </div>
+          
+          {/* Navigation Buttons - Bottom Right */}
+          <div className="absolute bottom-6 right-6 flex gap-3">
+            {currentStep > 1 && (
+              <button
+                onClick={handleBack}
+                className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+              >
+                ← Назад
+              </button>
+            )}
+            {isStepCompleted() && (
+              <button
+                onClick={handleNext}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+              >
+                {currentStep === totalSteps ? 'Получить расчет' : 'Далее →'}
+              </button>
+            )}
           </div>
         </div>
       </div>
