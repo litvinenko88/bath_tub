@@ -129,22 +129,26 @@ const quizSteps: QuizStep[] = [
       {
         id: "addon-hydro",
         title: "Гидромассажная система",
-        description: "Погрузитесь в блаженство с нашей фирменной гидромассажной системой, создающей эффект природных джакузи"
+        description: "Погрузитесь в блаженство с нашей фирменной гидромассажной системой, создающей эффект природных джакузи",
+        image: "/images/quiz/quiz4.1.png"
       },
       {
         id: "addon-led",
         title: "Многоцветная LED-подсветка",
-        description: "Создавайте нужную атмосферу одним нажатием кнопки – мягкая подсветка превратит ваше купание в волшебный ритуал"
+        description: "Создавайте нужную атмосферу одним нажатием кнопки – мягкая подсветка превратит ваше купание в волшебный ритуал",
+        image: "/images/quiz/quiz4.2.png"
       },
       {
         id: "addon-audio",
         title: "Встроенная аудиосистема", 
-        description: "Наслаждайтесь любимой музыкой под открытым небом – кристально чистый звук и звездное небо создадут идеальную гармонию"
+        description: "Наслаждайтесь любимой музыкой под открытым небом – кристально чистый звук и звездное небо создадут идеальную гармонию",
+        image: "/images/quiz/quiz4.3.png"
       },
       {
         id: "addon-table",
         title: "Складной сервировочный столик",
-        description: "Все необходимое для отдыха всегда под рукой – от бокала вина до гаджетов"
+        description: "Все необходимое для отдыха всегда под рукой – от бокала вина до гаджетов",
+        image: "/images/quiz/quiz4.4.png"
       }
     ]
   }
@@ -186,6 +190,9 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
       case 4:
         setSelectedMainImage("/images/quiz/quiz3.jpg")
         break
+      case 5:
+        setSelectedMainImage("/images/quiz/quiz4.jpg")
+        break
       default:
         // Для остальных вопросов оставляем текущее изображение
         break
@@ -203,8 +210,8 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
     if (currentStep === 1 && selectedOption?.mainImage) {
       // Для первого вопроса используем mainImage
       setSelectedMainImage(selectedOption.mainImage)
-    } else if ((currentStep === 2 || currentStep === 3 || currentStep === 4) && selectedOption?.image) {
-      // Для вопросов 2, 3, 4 показываем изображение из карточки
+    } else if ((currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5) && selectedOption?.image) {
+      // Для вопросов 2, 3, 4, 5 показываем изображение из карточки
       setSelectedMainImage(selectedOption.image)
     }
 
@@ -392,7 +399,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
               <div className="space-y-6">
                 <h3 className="text-lg font-semibold text-gray-800">{currentStepData?.question}</h3>
                 
-                <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 ? 'grid grid-cols-1 gap-4' : 'grid grid-cols-3 gap-4'}`}>
+                <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'grid grid-cols-1 gap-4' : 'grid grid-cols-3 gap-4'}`}>
                   {currentStepData?.options.map((option) => {
                     const isSelected = answers[currentStep]?.includes(option.id) || false
                     
@@ -400,14 +407,14 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                       <div
                         key={option.id}
                         onClick={() => handleOptionSelect(option.id)}
-                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${currentStep === 2 || currentStep === 3 || currentStep === 4 ? 'flex items-center' : 'text-center'} ${
+                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-md ${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'flex items-center' : 'text-center'} ${
                           isSelected 
                             ? 'border-orange-400 bg-orange-50 shadow-lg' 
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
                         {option.image && (
-                          <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 ? 'w-24 h-24 mr-4 flex-shrink-0' : 'w-full h-24 mb-3'} rounded-lg overflow-hidden bg-gray-100`}>
+                          <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'w-24 h-24 mr-4 flex-shrink-0' : 'w-full h-24 mb-3'} rounded-lg overflow-hidden bg-gray-100`}>
                             <img 
                               src={option.image} 
                               alt={option.title}
@@ -416,7 +423,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                           </div>
                         )}
                         
-                        <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 ? 'flex-1' : ''}`}>
+                        <div className={`${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'flex-1' : ''}`}>
                           <h5 className="font-bold text-gray-800 text-sm mb-2 leading-tight">{option.title}</h5>
                           
                           {option.description && (
@@ -428,7 +435,7 @@ export default function Quiz({ isOpen, onClose }: QuizProps) {
                           )}
                         </div>
                         
-                        <div className={`w-5 h-5 rounded-full border-2 ${currentStep === 2 || currentStep === 3 || currentStep === 4 ? 'ml-4 flex-shrink-0' : 'mx-auto'} transition-colors ${
+                        <div className={`w-5 h-5 rounded-full border-2 ${currentStep === 2 || currentStep === 3 || currentStep === 4 || currentStep === 5 ? 'ml-4 flex-shrink-0' : 'mx-auto'} transition-colors ${
                           isSelected ? 'border-orange-400 bg-orange-400' : 'border-gray-300'
                         }`}>
                           {isSelected && (
