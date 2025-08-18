@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import * as React from 'react'
+import { sendToTelegram } from '../../utils/telegram'
 
 interface ConsultationModalProps {
   isOpen: boolean
@@ -49,29 +50,26 @@ const ConsultationModal = ({ isOpen, onClose, source = 'Кнопка "Консу
     if (!formData.consent || !validateForm()) return
 
     setIsSubmitting(true)
+    setError('')
 
     try {
-      // Для статического сайта имитируем отправку
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const success = await sendToTelegram({
+        name: formData.name,
+        phone: formData.phone,
+        source: source
+      })
       
-      // В реальном проекте здесь можно использовать внешний сервис:
-      // const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     name: formData.name,
-      //     phone: formData.phone,
-      //     source
-      //   })
-      // })
-
-      setIsSuccess(true)
-      setTimeout(() => {
-        onClose()
-        setIsSuccess(false)
-        setFormData({ name: '', phone: '', consent: false })
-        setErrors({ name: '', phone: '' })
-      }, 2000)
+      if (success) {
+        setIsSuccess(true)
+        setTimeout(() => {
+          onClose()
+          setIsSuccess(false)
+          setFormData({ name: '', phone: '', consent: false })
+          setErrors({ name: '', phone: '' })
+        }, 2000)
+      } else {
+        setError('Ошибка отправки. Попробуйте еще раз.')
+      }
     } catch (error) {
       console.error('Ошибка отправки:', error)
       setError('Произошла ошибка при отправке. Попробуйте еще раз.')

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { sendToTelegram } from '../../utils/telegram'
 
 interface ContactFormProps {
   isOpen: boolean
@@ -48,33 +49,27 @@ export default function ContactForm({ isOpen, onClose, quizData }: ContactFormPr
     if (!validateForm()) return
 
     setIsSubmitting(true)
+    setError('')
 
     try {
-      // Для статического сайта используем внешний сервис или просто показываем успех
-      // В реальном проекте здесь можно использовать Formspree, Netlify Forms или другой сервис
+      const success = await sendToTelegram({
+        name: formData.name,
+        phone: formData.phone,
+        source: 'Квиз - Расчет стоимости',
+        quizData: quizData
+      })
       
-      // Имитируем отправку
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Можно добавить отправку через внешний сервис:
-      // const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     name: formData.name,
-      //     phone: formData.phone,
-      //     source: 'Квиз - Расчет стоимости',
-      //     quizData: JSON.stringify(quizData)
-      //   })
-      // })
-      
-      setIsSuccess(true)
-      setTimeout(() => {
-        onClose()
-        setFormData({ name: '', phone: '', agreement: false })
-        setErrors({})
-        setIsSuccess(false)
-      }, SUCCESS_DISPLAY_DURATION)
+      if (success) {
+        setIsSuccess(true)
+        setTimeout(() => {
+          onClose()
+          setFormData({ name: '', phone: '', agreement: false })
+          setErrors({})
+          setIsSuccess(false)
+        }, SUCCESS_DISPLAY_DURATION)
+      } else {
+        setError('Ошибка отправки. Попробуйте еще раз.')
+      }
       
     } catch (error) {
       console.error('Ошибка отправки:', error)
