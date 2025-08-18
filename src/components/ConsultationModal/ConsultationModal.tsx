@@ -50,28 +50,20 @@ const ConsultationModal = ({ isOpen, onClose, source = 'Кнопка "Консу
 
     setIsSubmitting(true)
 
-    const message = `🔥 Новая заявка с сайта "Банные чаны"
-
-👤 Имя: ${formData.name}
-📞 Телефон: ${formData.phone}
-📍 Источник: ${source}
-
-⏰ Время: ${new Date().toLocaleString('ru-RU')}`
-
     try {
-      const response = await fetch('/api/send-message', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          source
-        })
-      })
-
-      if (!response.ok) {
-        throw new Error('Ошибка отправки')
-      }
+      // Для статического сайта имитируем отправку
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // В реальном проекте здесь можно использовать внешний сервис:
+      // const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     name: formData.name,
+      //     phone: formData.phone,
+      //     source
+      //   })
+      // })
 
       setIsSuccess(true)
       setTimeout(() => {
